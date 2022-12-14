@@ -70,10 +70,6 @@ class Player(pygame.sprite.Sprite):
         self.image.fill(next_color)
         self.player_color = next_color
 
-    def update_bullet_color(self):
-        """Gets color of player and sends it to bullet shooter"""
-
-
 
     def get_input(self):
         """
@@ -139,11 +135,13 @@ class Player(pygame.sprite.Sprite):
         """
         Shoots a bullet
         """
+        text = "COLOR"
         bullet_speed = -8
         self.bullets.add(Bullet(self.rect.center, bullet_speed, self.rect.bottom, self.player_color))
         # Pew
         self.update_player_color()
-        print('pew')
+        print('Pew but with ', end="")
+        print("\x1B[3m" + text + "\x1B[0m")
 
     def update(self):
         """

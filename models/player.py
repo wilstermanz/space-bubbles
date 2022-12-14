@@ -1,4 +1,5 @@
 import pygame
+from models.laser import Laser
 
 class Player(pygame.sprite.Sprite):
     """
@@ -41,10 +42,13 @@ class Player(pygame.sprite.Sprite):
         self.bullet_time = 0
         self.bullet_cooldown = 600  # Bullets can be shot every 600ms
 
+        # Bring in the laser
+        self.lasers = pygame.sprite.Group()
+
 
     def get_input(self):
         """
-        Gets input from the user and updates the state of the player sprite
+        Gets input from the user and updat  es the state of the player sprite
         accordingly.
         """
         # Get the keys that are currently being pressed
@@ -103,6 +107,7 @@ class Player(pygame.sprite.Sprite):
         """
         Shoots a bullet
         """
+        self.lasers.add(Laser(self.rect.center))
         # Pew
         print('pew')
 

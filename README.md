@@ -28,6 +28,6 @@ This is Space Bubbles, a mashup of Space Invaders and Bubble Shooter. It's purpo
 - [ ] Global leaderboard
 
 ## Authors
-Aaron Manuel | [Github](https://github.com/AaronManuel15)
-Ben Sbanotto | [Github](https://github.com/bsbanotto)
-Zach Wilsterman | [Github](https://github.com/wilstermanz)
+Aaron Manuel | [Github](https://github.com/AaronManuel15) 
+Ben Sbanotto | [Github](https://github.com/bsbanotto) 
+Zach Wilsterman | [Github](https://github.com/wilstermanz) 

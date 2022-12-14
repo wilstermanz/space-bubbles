@@ -1,6 +1,5 @@
 import pygame
 from models.player import Player
-from models.laser import Laser
 
 class Game:
     def __init__(self):
@@ -28,10 +27,8 @@ class Game:
         self.player.update()
 
         # Draw all sprite groups to the screen
+        self.player.sprite.bullets.draw(screen)
         self.player.draw(screen)
-
-        # Draw the laser sprite group to the screen
-        self.player.sprite.lasers.draw(screen)
 
         # update all sprite groups
         # draw all sprite groups

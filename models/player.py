@@ -1,5 +1,14 @@
 import pygame
-from models.laser import Laser
+import random
+from models.bullet import Bullet
+
+# Color definitions to randomly change color of bullets
+# White=1, Red=2, Green=3, Yellow=4, Blue=5
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
 
 class Player(pygame.sprite.Sprite):
     """
@@ -13,6 +22,7 @@ class Player(pygame.sprite.Sprite):
     # Class attributes
     player_width = 50
     player_height = 20
+    player_color = (255, 0, 0)
 
     def __init__(self, pos, speed):
         """
@@ -28,11 +38,9 @@ class Player(pygame.sprite.Sprite):
         # Create a new surface representing the player sprite
         self.image = pygame.Surface([self.player_width, self.player_height])
 
-        # Fill the surface with the color red
-        self.image.fill((255, 0, 0))
-
         # Set the position of the player sprite to the given position
-        self.rect = self.image.get_rect(midbottom=pos)
+        self.image.fill(self.player_color)
+        self.rect = self.image.get_rect(midbottom = pos)
 
         # Set the speed of the player sprite to the given speed
         self.speed = speed
@@ -43,7 +51,28 @@ class Player(pygame.sprite.Sprite):
         self.bullet_cooldown = 600  # Bullets can be shot every 600ms
 
         # Bring in the laser
-        self.lasers = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
+
+
+    def update_player_color(self):
+        """Updates player color"""
+        next_color_number = random.randint(1, 5)
+        if next_color_number == 1:
+            next_color = WHITE
+        elif next_color_number == 2:
+            next_color = RED
+        elif next_color_number == 3:
+            next_color = GREEN
+        elif next_color_number == 4:
+            next_color = YELLOW
+        else:
+            next_color = BLUE
+        self.image.fill(next_color)
+        self.player_color = next_color
+
+    def update_bullet_color(self):
+        """Gets color of player and sends it to bullet shooter"""
+
 
 
     def get_input(self):
@@ -103,12 +132,17 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right >= screen_width:
             self.rect.right = screen_width
 
-    def shoot_bullet(self):
+    # def get_color(self):
+    #     return self.color
+
+    def shoot_bullet(self):       
         """
         Shoots a bullet
         """
-        self.lasers.add(Laser(self.rect.center))
+        bullet_speed = -8
+        self.bullets.add(Bullet(self.rect.center, bullet_speed, self.rect.bottom, self.player_color))
         # Pew
+        self.update_player_color()
         print('pew')
 
     def update(self):
@@ -123,3 +157,6 @@ class Player(pygame.sprite.Sprite):
 
         # Recharge the player sprite's bullet if necessary
         self.recharge()
+
+        # Move the lasers up
+        self.bullets.update()

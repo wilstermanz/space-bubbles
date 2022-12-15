@@ -20,6 +20,7 @@ class Game:
         # Bubble setup
         self.bubbles = pygame.sprite.Group()
         self.bubbles_setup()
+        self.bubbles_direction = 1
 
     def rand_color_picker(self):
         """Picks a random color for bubbles"""
@@ -50,6 +51,23 @@ class Game:
                 bubble_sprite = Bubble(self.rand_color_picker(), x, y)
                 self.bubbles.add(bubble_sprite)
 
+    def bubble_position_checker(self):
+        from main import screen_width
+
+        all_bubbles = self.bubbles.sprites()
+        for bubble in all_bubbles:
+            if bubble.rect.right >= screen_width:
+                self.bubbles_direction *= -1
+                self.bubbles_drop()
+            if bubble.rect.left <= 0:
+                self.bubbles_direction *= -1
+                self.bubbles_drop()
+
+    def bubbles_drop(self, drop = 2):
+        if self.bubbles:
+            for bubble in self.bubbles.sprites():
+                bubble.rect.y += drop
+
     def run(self):
         """
         Runs a single iteration of the game loop.
@@ -61,6 +79,10 @@ class Game:
 
         # Update the player sprite
         self.player.update()
+
+        # Update the bubbles sprite
+        self.bubbles.update(self.bubbles_direction)
+        self.bubble_position_checker()
 
         # Draw all sprite groups to the screen
         self.player.sprite.bullets.draw(screen)

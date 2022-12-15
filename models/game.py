@@ -1,7 +1,8 @@
-import pygame
+import pygame, sys
 import random
 from models.player import Player
 from models.bubbles import Bubble
+
 
 class Game:
     def __init__(self):
@@ -83,21 +84,33 @@ class Game:
         sprite groups to the screen.
         """
         from main import screen
+        from main import clock
+        while True:
+            screen.fill("black")
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    # If the user has clicked the 'x' in the top right corner, quit
+                    # the game and exit the program
+                    pygame.quit()
+                    sys.exit()
+            
+            # Update the player sprite
+            self.player.update()
 
-        # Update the player sprite
-        self.player.update()
+            # Update the bubbles sprite
+            self.bubbles.update(self.bubbles_direction)
+            self.bubble_position_checker()
 
-        # Update the bubbles sprite
-        self.bubbles.update(self.bubbles_direction)
-        self.bubble_position_checker()
+            # Draw all sprite groups to the screen
+            self.player.sprite.bullets.draw(screen)
+            self.player.draw(screen)
 
-        # Draw all sprite groups to the screen
-        self.player.sprite.bullets.draw(screen)
-        self.player.draw(screen)
+            self.bubbles.draw(screen)
 
-        self.bubbles.draw(screen)
-
-        # Collisions
-        self.collision_checks()
-        # update all sprite groups
-        # draw all sprite groups
+            # Collisions
+            self.collision_checks()
+            # update all sprite groups
+            # draw all sprite groups
+            pygame.display.flip()
+            clock.tick(60)

@@ -29,12 +29,7 @@ def main_loop():
     # Game loop
     while True:
         # Check for user input
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                # If the user has clicked the 'x' in the top right corner, quit
-                # the game and exit the program
-                pygame.quit()
-                sys.exit()
+        
 
         # Cover the screen with the background color
         screen.fill((30, 30, 30))
@@ -92,7 +87,8 @@ def main_menu():
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
-        
+
+
 def leaderboard():
     """Place holder for pulling and displaying a leaderboard"""
     

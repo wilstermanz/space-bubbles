@@ -4,11 +4,12 @@ from models.bullet import Bullet
 
 # Color definitions to randomly change color of bullets
 # White=1, Red=2, Green=3, Yellow=4, Blue=5
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-YELLOW = (255, 255, 0)
-BLUE = (0, 0, 255)
+WHITE = (202, 213, 218)
+RED = (232, 53, 38)
+GREEN = (87, 171, 65)
+YELLOW = (250, 228, 25)
+BLUE = (22, 114, 184)
+BLACK = (30, 30, 30)
 
 class Player(pygame.sprite.Sprite):
     """
@@ -22,7 +23,7 @@ class Player(pygame.sprite.Sprite):
     # Class attributes
     player_width = 60
     player_height = 20
-    player_color = (255, 0, 0)
+    player_color = RED
 
     def __init__(self, pos, speed):
         """

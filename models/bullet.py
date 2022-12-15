@@ -10,6 +10,7 @@ YELLOW = (250, 228, 25)
 BLUE = (22, 114, 184)
 BLACK = (30, 30, 30)
 
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, pos, speed, screen_height, color):
         super().__init__()
@@ -22,11 +23,11 @@ class Bullet(pygame.sprite.Sprite):
         elif color == YELLOW:
             color = 'yellow'
         else:
-            color = 'blue' 
+            color = 'blue'
         file_path = 'images/' + color + '_dart.png'
         self.image = pygame.Surface((16, 16))
         self.image = pygame.image.load(file_path).convert_alpha()
-        self.rect = self.image.get_rect(center = pos)
+        self.rect = self.image.get_rect(center=pos)
         self.speed = speed
         self.height_y_constraint = screen_height
         self.color = color

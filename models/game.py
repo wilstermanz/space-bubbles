@@ -1,7 +1,8 @@
-import pygame, sys
-import random
-from models.player import Player
 from models.bubbles import Bubble
+from models.player import Player
+import pygame
+import random
+import sys
 
 # Define Default Colors
 WHITE = (202, 213, 218)
@@ -10,6 +11,7 @@ GREEN = (87, 171, 65)
 YELLOW = (250, 228, 25)
 BLUE = (22, 114, 184)
 BLACK = (30, 30, 30)
+
 
 class Game:
     def __init__(self):
@@ -32,7 +34,6 @@ class Game:
         self.bubbles_speed = 1.5
         self.bubbles_direction = 1
 
-
     def rand_color_picker(self):
         """Picks a random color for bubbles"""
         color_number = random.randint(1, 5)
@@ -48,8 +49,8 @@ class Game:
             color = 'blue'
         return color
 
-    def bubbles_setup(self, rows = 5, cols = 8, x_distance = 60,
-                      y_distance = 60, x_offset = 5, y_offset = 15):
+    def bubbles_setup(self, rows=5, cols=8, x_distance=60,
+                      y_distance=60, x_offset=5, y_offset=15):
         """
         Creates an array of bubbles that are ready to be popped.
 
@@ -57,7 +58,7 @@ class Game:
         """
         for row_index, row in enumerate(range(rows)):
             for col_index, col in enumerate(range(cols)):
-                x = col_index  * x_distance + x_offset
+                x = col_index * x_distance + x_offset
                 y = row_index * y_distance + y_offset
                 bubble_sprite = Bubble(self.rand_color_picker(), x, y)
                 self.bubbles.add(bubble_sprite)
@@ -76,7 +77,7 @@ class Game:
             if bubble.rect.bottom >= screen_height:
                 self.game_over = True
 
-    def bubbles_drop(self, drop = 2):
+    def bubbles_drop(self, drop=2):
         if self.bubbles:
             for bubble in self.bubbles.sprites():
                 bubble.rect.y += drop
@@ -96,12 +97,11 @@ class Game:
 
         # bubble player check
         for player in self.player:
-            player_hit = pygame.sprite.spritecollide(player, self.bubbles, True)
+            player_hit = pygame.sprite.spritecollide(
+                player, self.bubbles, True)
             if player_hit:
                 print("fuck you suck")
                 self.game_over = True
-                
-                
 
     def run(self):
         """
@@ -112,16 +112,17 @@ class Game:
         """
         from main import screen
         from main import clock
-        while self.game_over == False:
+        while self.game_over is False:
+
             screen.fill(BLACK)
-            
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    # If the user has clicked the 'x' in the top right corner, quit
-                    # the game and exit the program
+                    # If the user has clicked the 'x' in the top right corner,
+                    # quit the game and exit the program
                     pygame.quit()
                     sys.exit()
-            
+
             # Update the player sprite
             self.player.update()
 

@@ -13,6 +13,8 @@ GREEN = (87, 171, 65)
 YELLOW = (250, 228, 25)
 BLUE = (22, 114, 184)
 BLACK = (30, 30, 30)
+GOLD = (217, 187, 106)
+PURPLE = (115, 43, 245)
 
 # Set the screen dimensions
 screen_width = 600
@@ -31,11 +33,11 @@ def main_menu():
 
     screen.fill((30, 30, 30))
 
-    MenuText = get_font(70).render("SPACE BUBBLES!!", True, WHITE)
+    MenuText = get_font(85).render("SPACE BUBBLES!!", True, PURPLE)
     MenuRect = MenuText.get_rect(center=(300, 100))
 
     PlayButton = Button(image=None,
-                        pos=(300, 250),
+                        pos=(300, 275),
                         text_input="PLAY",
                         font=get_font(50),
                         base_color=WHITE,
@@ -43,14 +45,14 @@ def main_menu():
                         )
 
     LeaderBoardButton = Button(image=None,
-                               pos=(300, 425),
+                               pos=(300, 375),
                                text_input="LEADERBOARD",
                                font=get_font(50),
                                base_color=WHITE,
                                hovering_color=GREEN)
 
     QuitButton = Button(image=None,
-                        pos=(300, 525),
+                        pos=(300, 475),
                         text_input="QUIT (while you're ahead)",
                         font=get_font(50),
                         base_color=WHITE,
@@ -101,14 +103,14 @@ def leaderboard():
 
     MenuMouse = pygame.mouse.get_pos()
 
-    LeaderboardText = get_font(100).render("Leaderboard", True, "#b68f40")
+    LeaderboardText = get_font(100).render("Leaderboard", True, PURPLE)
     LeaderboardRect = LeaderboardText.get_rect(center=(screen_width // 2, 100))
     BackButton = Button(image=None,
                         pos=(300, 525),
                         text_input="Back",
                         font=get_font(50),
-                        base_color="White",
-                        hovering_color="Green")
+                        base_color=WHITE,
+                        hovering_color=GREEN)
 
     screen.blit(LeaderboardText, LeaderboardRect)
 
@@ -244,7 +246,7 @@ def text1(name, x, y):
     return screen.blit(text, (x,y))
 
 def get_font(size):     # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("fonts/Branda-yolq.ttf", size)
+    return pygame.font.Font("fonts/CaveatBrush-Regular.ttf", size)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 import pygame
+import random
 from models.player import Player
+from models.bubbles import Bubble
 
 class Game:
     def __init__(self):
@@ -11,8 +13,42 @@ class Game:
         """
         from main import screen_width, screen_height
 
+        # Player setup
         player_sprite = Player((screen_width / 2, screen_height), 5)
         self.player = pygame.sprite.GroupSingle(player_sprite)
+
+        # Bubble setup
+        self.bubbles = pygame.sprite.Group()
+        self.bubbles_setup()
+
+    def rand_color_picker(self):
+        """Picks a random color for bubbles"""
+        color_number = random.randint(1, 5)
+        if color_number == 1:
+            color = 'white'
+        elif color_number == 2:
+            color = 'red'
+        elif color_number == 3:
+            color = 'green'
+        elif color_number == 4:
+            color = 'yellow'
+        else:
+            color = 'blue'
+        return color
+
+    def bubbles_setup(self, rows = 5, cols = 8, x_distance = 60,
+                      y_distance = 60, x_offset = 5, y_offset = 15):
+        """
+        Creates an array of bubbles that are ready to be popped.
+
+        Bubbles colors are randomly chosen
+        """
+        for row_index, row in enumerate(range(rows)):
+            for col_index, col in enumerate(range(cols)):
+                x = col_index  * x_distance + x_offset
+                y = row_index * y_distance + y_offset
+                bubble_sprite = Bubble(self.rand_color_picker(), x, y)
+                self.bubbles.add(bubble_sprite)
 
     def run(self):
         """
@@ -29,6 +65,8 @@ class Game:
         # Draw all sprite groups to the screen
         self.player.sprite.bullets.draw(screen)
         self.player.draw(screen)
+
+        self.bubbles.draw(screen)
 
         # update all sprite groups
         # draw all sprite groups

@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
     screen, and bullets can only be shot once every 600ms.
     """
     # Class attributes
-    player_width = 50
+    player_width = 60
     player_height = 20
     player_color = (255, 0, 0)
 

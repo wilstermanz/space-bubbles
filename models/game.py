@@ -21,6 +21,7 @@ class Game:
         """
         from main import screen_width, screen_height
 
+        self.game_over = False
         # Player setup
         player_sprite = Player((screen_width / 2, screen_height), 5)
         self.player = pygame.sprite.GroupSingle(player_sprite)
@@ -62,7 +63,7 @@ class Game:
                 self.bubbles.add(bubble_sprite)
 
     def bubble_position_checker(self):
-        from main import screen_width
+        from main import screen_width, screen_height
 
         all_bubbles = self.bubbles.sprites()
         for bubble in all_bubbles:
@@ -72,6 +73,8 @@ class Game:
             if bubble.rect.left <= 0:
                 self.bubbles_direction = 1
                 self.bubbles_drop()
+            if bubble.rect.bottom >= screen_height:
+                self.game_over = True
 
     def bubbles_drop(self, drop = 2):
         if self.bubbles:
@@ -82,14 +85,23 @@ class Game:
         # player bullets pop bubbles
         if self.player.sprite.bullets:
             for bullet in self.player.sprite.bullets:
-                hits = pygame.sprite.spritecollide(bullet, self.bubbles, False)
-                if hits:
+                pops = pygame.sprite.spritecollide(bullet, self.bubbles, False)
+                if pops:
                     bullet.kill()
-                    for bubble in hits:
+                    for bubble in pops:
                         if bubble.color == bullet.color:
                             bubble.kill()
                         else:
                             self.bubbles_speed *= 1.1
+
+        # bubble player check
+        for player in self.player:
+            player_hit = pygame.sprite.spritecollide(player, self.bubbles, True)
+            if player_hit:
+                print("fuck you suck")
+                self.game_over = True
+                
+                
 
     def run(self):
         """
@@ -100,7 +112,7 @@ class Game:
         """
         from main import screen
         from main import clock
-        while True:
+        while self.game_over == False:
             screen.fill(BLACK)
             
             for event in pygame.event.get():

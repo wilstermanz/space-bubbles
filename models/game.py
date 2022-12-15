@@ -48,6 +48,12 @@ class Game:
         self.hits = 0
         self.misses = 0
 
+        # Audio
+        pygame.mixer.init()
+        music = pygame.mixer.Sound('/audio/game_music.wav')
+        music.set_volume(0.2)
+        music.play(loops = -1)
+
     def rand_color_picker(self):
         """Picks a random color for bubbles"""
         color_number = random.randint(1, 5)

@@ -28,7 +28,9 @@ class Game:
         # Bubble setup
         self.bubbles = pygame.sprite.Group()
         self.bubbles_setup()
+        self.bubbles_speed = 1.5
         self.bubbles_direction = 1
+
 
     def rand_color_picker(self):
         """Picks a random color for bubbles"""
@@ -69,7 +71,7 @@ class Game:
                 self.bubbles_drop()
             if bubble.rect.left <= 0:
                 self.bubbles_direction = 1
-                self.bubbles_drop
+                self.bubbles_drop()
 
     def bubbles_drop(self, drop = 2):
         if self.bubbles:
@@ -80,8 +82,14 @@ class Game:
         # player bullets pop bubbles
         if self.player.sprite.bullets:
             for bullet in self.player.sprite.bullets:
-                if pygame.sprite.spritecollide(bullet, self.bubbles, True):
+                hits = pygame.sprite.spritecollide(bullet, self.bubbles, False)
+                if hits:
                     bullet.kill()
+                    for bubble in hits:
+                        if bubble.color == bullet.color:
+                            bubble.kill()
+                        else:
+                            self.bubbles_speed *= 1.1
 
     def run(self):
         """
@@ -106,7 +114,7 @@ class Game:
             self.player.update()
 
             # Update the bubbles sprite
-            self.bubbles.update(self.bubbles_direction)
+            self.bubbles.update(self.bubbles_speed, self.bubbles_direction)
             self.bubble_position_checker()
 
             # Draw all sprite groups to the screen
@@ -117,7 +125,6 @@ class Game:
 
             # Collisions
             self.collision_checks()
-            # update all sprite groups
-            # draw all sprite groups
+
             pygame.display.flip()
             clock.tick(60)

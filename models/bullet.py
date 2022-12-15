@@ -29,6 +29,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = pos)
         self.speed = speed
         self.height_y_constraint = screen_height
+        self.color = color
 
     def destroy(self):
         """Destroyes laser sprites after they're off the window"""

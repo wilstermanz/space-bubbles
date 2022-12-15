@@ -21,9 +21,6 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Menu")
 
-# Create a new game instance
-game = Game()
-
 # def main_loop():
 #     """
 #     Runs the main game loop.
@@ -64,13 +61,14 @@ def main_menu():
     
     QuitButton = Button(image=None, pos=(300, 525), text_input="QUIT (while you're ahead)", font=get_font(50), base_color=WHITE, hovering_color=GREEN)
     
-    screen.blit(MenuText, MenuRect)
     running = True
     
     while running:
-        
+
         MenuMouse = pygame.mouse.get_pos()
-        
+
+        screen.blit(MenuText, MenuRect)
+
         for button in [PlayButton, LeaderBoardButton, QuitButton]:
             button.changeColor(MenuMouse)
             button.update(screen)
@@ -81,8 +79,10 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PlayButton.checkForInput(MenuMouse):
-                    running = False
+                    # Create a new game instance
+                    game = Game()
                     game.run()
+                    screen.fill((30, 30, 30))
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False
                     leaderboard()

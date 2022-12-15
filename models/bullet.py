@@ -33,6 +33,7 @@ class Bullet(pygame.sprite.Sprite):
     def destroy(self):
         """Destroyes laser sprites after they're off the window"""
         if self.rect.y <= -50 or self.rect.y >= self.height_y_constraint + 50:
+            print("bullet out of range")
             self.kill()
 
     def update(self):

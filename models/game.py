@@ -3,6 +3,13 @@ import random
 from models.player import Player
 from models.bubbles import Bubble
 
+# Define Default Colors
+WHITE = (202, 213, 218)
+RED = (232, 53, 38)
+GREEN = (87, 171, 65)
+YELLOW = (250, 228, 25)
+BLUE = (22, 114, 184)
+BLACK = (30, 30, 30)
 
 class Game:
     def __init__(self):
@@ -86,7 +93,7 @@ class Game:
         from main import screen
         from main import clock
         while True:
-            screen.fill("black")
+            screen.fill(BLACK)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

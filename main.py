@@ -4,6 +4,14 @@ from models.button import Button
 
 pygame.init()
 
+# Define Default Colors
+WHITE = (202, 213, 218)
+RED = (232, 53, 38)
+GREEN = (87, 171, 65)
+YELLOW = (250, 228, 25)
+BLUE = (22, 114, 184)
+BLACK = (30, 30, 30)
+
 # Set the screen dimensions
 screen_width = 600
 screen_height = 600
@@ -29,7 +37,7 @@ game = Game()
 #     # Game loop
 #     while True:
 #         # Check for user input
-        
+
 
 #         # Cover the screen with the background color
 #         screen.fill((30, 30, 30))
@@ -38,7 +46,7 @@ game = Game()
 #         main_menu()
 
 #         # Update the screen and tick the game clock
-        
+
 
 def main_menu():
     """ Main Menu Screen """
@@ -47,14 +55,14 @@ def main_menu():
     
     screen.fill((30, 30, 30))
 
-    MenuText = get_font(100).render("MAIN MENU", True, "#b68f40")
+    MenuText = get_font(100).render("MAIN MENU", True, WHITE)
     MenuRect = MenuText.get_rect(center=(300, 100))
     
-    PlayButton = Button(image=None, pos=(300, 250), text_input="PLAY", font=get_font(50), base_color="White", hovering_color="Green")
+    PlayButton = Button(image=None, pos=(300, 250), text_input="PLAY", font=get_font(50), base_color=WHITE, hovering_color=GREEN)
     
-    LeaderBoardButton = Button(image=None, pos=(300, 425), text_input="LEADERBOARD", font=get_font(50), base_color="White", hovering_color="Green")
+    LeaderBoardButton = Button(image=None, pos=(300, 425), text_input="LEADERBOARD", font=get_font(50), base_color=WHITE, hovering_color=GREEN)
     
-    QuitButton = Button(image=None, pos=(300, 525), text_input="QUIT (while you're ahead)", font=get_font(50), base_color="White", hovering_color="Green")
+    QuitButton = Button(image=None, pos=(300, 525), text_input="QUIT (while you're ahead)", font=get_font(50), base_color=WHITE, hovering_color=GREEN)
     
     screen.blit(MenuText, MenuRect)
     running = True

@@ -57,16 +57,23 @@ class Game:
         all_bubbles = self.bubbles.sprites()
         for bubble in all_bubbles:
             if bubble.rect.right >= screen_width:
-                self.bubbles_direction *= -1
+                self.bubbles_direction = -1
                 self.bubbles_drop()
             if bubble.rect.left <= 0:
-                self.bubbles_direction *= -1
-                self.bubbles_drop()
+                self.bubbles_direction = 1
+                self.bubbles_drop
 
     def bubbles_drop(self, drop = 2):
         if self.bubbles:
             for bubble in self.bubbles.sprites():
                 bubble.rect.y += drop
+
+    def collision_checks(self):
+        # player bullets pop bubbles
+        if self.player.sprite.bullets:
+            for bullet in self.player.sprite.bullets:
+                if pygame.sprite.spritecollide(bullet, self.bubbles, True):
+                    bullet.kill()
 
     def run(self):
         """
@@ -90,5 +97,7 @@ class Game:
 
         self.bubbles.draw(screen)
 
+        # Collisions
+        self.collision_checks()
         # update all sprite groups
         # draw all sprite groups

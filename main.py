@@ -20,6 +20,12 @@ PURPLE = (115, 43, 245)
 screen_width = 600
 screen_height = 600
 
+# # Play music on start
+# pygame.mixer.init()
+# music = pygame.mixer.Sound('audio/menu_music.wav')
+# music.set_volume(0.2)
+# music.play(loops = -1)
+
 # Initialize the screen and game clock
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
@@ -28,6 +34,12 @@ pygame.display.set_caption("Menu")
 
 def main_menu():
     """ Main Menu Screen """
+
+    # Play music on start
+    pygame.mixer.init()
+    music = pygame.mixer.Sound('audio/menu_music.wav')
+    music.set_volume(0.2)
+    music.play(loops = -1)
 
     pygame.display.set_caption("Menu")
 

@@ -7,7 +7,7 @@ This is Space Bubbles, a mashup of Space Invaders and Bubble Shooter. It's purpo
 ## Goals
 
 **Main goals**
-- [ ] A scoring system
+- [X] A scoring system
 - [X] Simple graphics
 - [ ] Infinite level length
 - [X] The speed increases over time to increase difficulty
@@ -17,7 +17,7 @@ This is Space Bubbles, a mashup of Space Invaders and Bubble Shooter. It's purpo
 - [X] Colorful bubbles!
 - [X] Colorful bullets!
 - [X] Bullets can only pop bubble of like colors
-- [ ] Sounds!
+- [X] Sounds!
 - [ ] Levels with increasing difficulty
 - [X] Bubble speed increases if the player makes a mistake
 - [ ] Local leaderboard using file storage

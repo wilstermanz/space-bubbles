@@ -164,16 +164,16 @@ class Game:
             # Draw all sprite groups to the screen
             self.player.sprite.bullets.draw(screen)
             self.player.draw(screen)
-
             self.bubbles.draw(screen)
 
             # Collisions
             self.collision_checks()
 
+            # update points and time clock
             self.add_points()
-            print(self.score)
             self.current_time = timedelta(
                 milliseconds=time.get_ticks() - self.start_time)
 
+            # Update screen
             pygame.display.flip()
             clock.tick(60)

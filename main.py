@@ -93,6 +93,7 @@ def main_menu():
                     game.run()
                     name = input()
                     print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, game.hits, game.shots_fired, game.misses))
+                    leaderDbBuild(game, name)
                     screen.fill((30, 30, 30))
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False
@@ -147,8 +148,9 @@ def leaderboard():
         pygame.display.flip()
         clock.tick(60)
 
-def leaderDbBuild():
+def leaderDbBuild(game=None, name=""):
     """Makes storage file/connection and creates table if not exists"""
+    
     
     # creates sqlite connection and creates the db
     conn = sqlite3.connect('leaderboard.db')
@@ -158,16 +160,18 @@ def leaderDbBuild():
                 Initials text,
                 Score integer,
                 BubblesPopped integer,
-                ShotsFired integer
+                ShotsFired integer,
+                ShotsMissed integer
                 )""")
     
     # inserts a row into the table BUT values need to be
     # established. Those are just placeholders currently
-    #c.execute("INSERT INTO performanceData VALUES (:initials, :score, :bubblespopped, :shotsfired)", ('initials': , 'score': , 'bubblespopped': , 'shotsfired': ))
+    if game is not None:
+        c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
 
-    # prints the db for funsies right now
-    c.execute("SELECT * FROM performanceData")
-    print(c.fetchmany(10))
+        # prints the db for funsies right now
+        c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
+        print(c.fetchmany(10))
 
     conn.commit()
 
@@ -240,6 +244,9 @@ def input():
                     name+=chr(event.key)
                 if event.key == pygame.K_z:
                     name+=chr(event.key)
+                if event.key == pygame.K_BACKSPACE:
+                    if len(name) > 0:
+                        name=name[:-1]
                 if event.key == pygame.K_RETURN:
                     done=False
             

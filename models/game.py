@@ -44,15 +44,12 @@ class Game:
 
         # Player stats
         self.score = 0
+        self.font = pygame.font.Font('fonts/CaveatBrush-Regular.ttf', 20)
         self.shots_fired = 0
         self.hits = 0
         self.misses = 0
 
         # Audio
-        pygame.mixer.init()
-        music = pygame.mixer.Sound('audio/menu_music.wav')
-        music.set_volume(0.2)
-        music.play(loops = -1)
         self.bullet_sound = pygame.mixer.Sound('audio/laser.wav')
         self.bullet_sound.set_volume(0.3)
         self.pop_sound = pygame.mixer.Sound('audio/pop.wav')
@@ -76,7 +73,7 @@ class Game:
         return color
 
     def bubbles_setup(self, rows=5, cols=8, x_distance=60,
-                      y_distance=60, x_offset=5, y_offset=15):
+                      y_distance=60, x_offset=5, y_offset=30):
         """
         Creates an array of bubbles that are ready to be popped.
 
@@ -121,6 +118,7 @@ class Game:
                             self.hits += 1
                             self.score += 1000
                             bubble.kill()
+                            print(self.score)
                         else:
                             self.misses += 1
                             self.splat_sound.play()
@@ -130,6 +128,7 @@ class Game:
                                 self.score = 0
 
                             self.bubbles_speed *= 1.1
+                            print(self.score)
 
         # bubble player check
         for player in self.player:
@@ -145,6 +144,18 @@ class Game:
         if self.clock_check - self.score_clock >= 1000:
             self.score += 10
             self.score_clock = time.get_ticks()
+    
+    def display_score(self, screen):
+        """Displays the current score on the screen"""
+        score_surface = self.font.render(f'score: {self.score}', False, WHITE)
+        score_rect = score_surface.get_rect(topleft = (0, 0))
+        screen.blit(score_surface, score_rect)
+
+    def display_hits(self, screen):
+        """Displays the number of hits next to score"""
+        hits_surface = self.font.render(f'hits: {self.hits}', False, WHITE)
+        hits_rect = hits_surface.get_rect(topleft = (200, 0))
+        screen.blit(hits_surface, hits_rect)
 
     def run(self):
         """
@@ -192,7 +203,13 @@ class Game:
             self.add_points()
             self.current_time = timedelta(
                 milliseconds=time.get_ticks() - self.start_time)
+            self.display_score(screen)
+            self.display_hits(screen)
 
             # Update screen
             pygame.display.flip()
             clock.tick(60)
+
+            # Exit game when all bubbles popped
+            if self.hits == 40:
+                return

@@ -162,9 +162,10 @@ def leaderDbBuild():
 def input():
     """ Gets user name"""
     name=""
-    NameText = get_font(35).render("What is your name, playa?", True, WHITE)
-    NameRect = NameText.get_rect(center=(300, 100))
-    screen.blit(NameText, NameRect)
+    NamePromptText = get_font(35).render("What is your name, playa?", True, WHITE)
+    NamePromptRect = NamePromptText.get_rect(center=(300, 100))
+    screen.blit(NamePromptText, NamePromptRect)
+
     pygame.display.update()
     done = True
     while done:
@@ -227,7 +228,14 @@ def input():
                     name+=chr(event.key)
                 if event.key == pygame.K_RETURN:
                     done=False
-    
+            
+            screen.fill((30, 30, 30))
+            NameText = get_font(30).render(name, True, GREEN)
+            NameRect = NameText.get_rect(center=(300, 200))
+            screen.blit(NamePromptText, NamePromptRect)
+            screen.blit(NameText, NameRect)
+            pygame.display.update()
+
     return text1(name,700,30)
 
 def text1(name, x, y):

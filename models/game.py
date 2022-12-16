@@ -50,9 +50,15 @@ class Game:
 
         # Audio
         pygame.mixer.init()
-        music = pygame.mixer.Sound('/audio/game_music.wav')
+        music = pygame.mixer.Sound('audio/menu_music.wav')
         music.set_volume(0.2)
         music.play(loops = -1)
+        self.bullet_sound = pygame.mixer.Sound('audio/laser.wav')
+        self.bullet_sound.set_volume(0.3)
+        self.pop_sound = pygame.mixer.Sound('audio/pop.wav')
+        self.pop_sound.set_volume(0.5)
+        self.splat_sound = pygame.mixer.Sound('audio/splat.wav')
+        self.splat_sound.set_volume(0.8)
 
     def rand_color_picker(self):
         """Picks a random color for bubbles"""
@@ -111,6 +117,7 @@ class Game:
                     bullet.kill()
                     for bubble in pops:
                         if bubble.color == bullet.color:
+                            self.pop_sound.play()
                             self.hits += 1
                             self.score += 1000
                             bubble.kill()
@@ -120,6 +127,7 @@ class Game:
                                 self.score -= 275
                             else:
                                 self.score = 0
+                                self.splat_sound.play()
                             self.bubbles_speed *= 1.1
 
         # bubble player check

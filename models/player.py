@@ -58,6 +58,10 @@ class Player(pygame.sprite.Sprite):
         # Bring in the laser
         self.bullets = pygame.sprite.Group()
 
+        # Audio for bullet fire
+        self.laser_sound = pygame.mixer.Sound('audio/laser.wav')
+        self.laser_sound.set_volume(0.5)
+
     def update_player_color(self):
         """Updates player color"""
         next_color_number = random.randint(1, 5)
@@ -149,6 +153,7 @@ class Player(pygame.sprite.Sprite):
                                 )
                          )
         # Pew
+        self.laser_sound.play()
         self.update_player_color()
         print('Pew but with ', end="")
         print("\x1B[3m" + text + "\x1B[0m")

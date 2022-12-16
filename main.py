@@ -238,7 +238,7 @@ def input():
             screen.blit(NameText, NameRect)
             pygame.display.update()
 
-    return text1(name,700,30)
+    return name
 
 def text1(name, x, y):
     font = pygame.font.SysFont(None, 25)

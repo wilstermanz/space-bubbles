@@ -3,6 +3,8 @@ from models.button import Button
 import pygame
 import sys
 import sqlite3
+from models.table import Table
+
 
 pygame.init()
 
@@ -111,6 +113,40 @@ def leaderboard():
     """Place holder for pulling and displaying a leaderboard"""
     
     leaderDbBuild()
+    conn = sqlite3.connect('leaderboard.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
+    leaders = c.fetchmany(10)
+    
+    table = Table()
+    table.set_column_num(5)
+    table.set_row_num(100, 30)
+    table.resize(500, 250)
+    for i in range(9):
+        for j in range(4):
+            table.set_text(i, j, f"{leaders[i][j]}")
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4:
+                    table.move_data(False)
+                elif event.button == 5:
+                    table.move_data(True)
+                elif event.button == 1:
+                    table.scroll(event)
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    table.scroll(event)
+            elif event.type == pygame.MOUSEMOTION:
+                table.scroll(event)
+        screen.fill("BLACK")
+        table.draw(screen)
+        pygame.display.flip()
+    
+    
 
     screen.fill((30, 30, 30))
 
@@ -126,6 +162,7 @@ def leaderboard():
                         hovering_color=GREEN)
 
     screen.blit(LeaderboardText, LeaderboardRect)
+    conn.close()
 
     while True:
         pygame.display.set_caption("Leaderboard")
@@ -169,9 +206,10 @@ def leaderDbBuild(game=None, name=""):
     if game is not None:
         c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
 
-        # prints the db for funsies right now
-        c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
-        print(c.fetchmany(10))
+    # prints the db for funsies right now
+    c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
+    print(c.fetchmany(10))
+
 
     conn.commit()
 
@@ -243,6 +281,8 @@ def input():
                 if event.key == pygame.K_y:
                     name+=chr(event.key)
                 if event.key == pygame.K_z:
+                    name+=chr(event.key)
+                if event.key == pygame.K_SPACE:
                     name+=chr(event.key)
                 if event.key == pygame.K_BACKSPACE:
                     if len(name) > 0:

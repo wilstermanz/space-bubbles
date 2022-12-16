@@ -122,6 +122,9 @@ class Game:
                     # quit the game and exit the program
                     pygame.quit()
                     sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return
 
             # Update the player sprite
             self.player.update()

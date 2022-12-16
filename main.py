@@ -80,7 +80,7 @@ def main_menu():
                     game = Game()
                     game.run()
                     name = input()
-                    print(name)
+                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, game.hits, game.shots_fired, game.misses))
                     screen.fill((30, 30, 30))
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False

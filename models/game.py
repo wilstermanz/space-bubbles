@@ -155,8 +155,6 @@ class Game:
         """
         from main import screen
         from main import clock
-        from main import input
-        from main import text1
         while self.game_over is False:
 
             screen.fill(BLACK)

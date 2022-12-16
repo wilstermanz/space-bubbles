@@ -33,7 +33,7 @@ class Game:
         self.score_clock = time.get_ticks()
 
         # Player setup
-        player_sprite = Player((screen_width / 2, screen_height), 5)
+        player_sprite = Player((screen_width / 2, screen_height - 5), 5)
         self.player = pygame.sprite.GroupSingle(player_sprite)
 
         # Bubble setup

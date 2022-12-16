@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
     """
     # Class attributes
     player_width = 60
-    player_height = 20
+    player_height = 35
     player_color = RED
 
     def __init__(self, pos, speed):
@@ -40,10 +40,11 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Create a new surface representing the player sprite
-        self.image = pygame.Surface([self.player_width, self.player_height])
+        self.player_color = 'red'
+        file_path = 'images/' + self.player_color + '_ship_sprite.png'
+        self.image = pygame.image.load(file_path).convert_alpha()
 
         # Set the position of the player sprite to the given position
-        self.image.fill(self.player_color)
         self.rect = self.image.get_rect(midbottom=pos)
 
         # Set the speed of the player sprite to the given speed
@@ -66,21 +67,21 @@ class Player(pygame.sprite.Sprite):
         """Updates player color"""
         next_color_number = random.randint(1, 5)
         if next_color_number == 1:
-            next_color = WHITE
+            self.player_color = 'white'
         elif next_color_number == 2:
-            next_color = RED
+            self.player_color = 'red'
         elif next_color_number == 3:
-            next_color = GREEN
+            self.player_color = 'green'
         elif next_color_number == 4:
-            next_color = YELLOW
+            self.player_color = 'yellow'
         else:
-            next_color = BLUE
-        self.image.fill(next_color)
-        self.player_color = next_color
+            self.player_color = 'blue'
+        file_path = 'images/' + self.player_color + '_ship_sprite.png'
+        self.image = pygame.image.load(file_path).convert_alpha()
 
     def get_input(self):
         """
-        Gets input from the user and updat  es the state of the player sprite
+        Gets input from the user and updates the state of the player sprite
         accordingly.
         """
         # Get the keys that are currently being pressed

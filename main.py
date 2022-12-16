@@ -2,6 +2,7 @@ from models.game import Game
 from models.button import Button
 import pygame
 import sys
+import sqlite3
 
 pygame.init()
 
@@ -91,6 +92,8 @@ def main_menu():
 
 def leaderboard():
     """Place holder for pulling and displaying a leaderboard"""
+    
+    leaderDbBuild()
 
     screen.fill((30, 30, 30))
 
@@ -128,6 +131,31 @@ def leaderboard():
         pygame.display.flip()
         clock.tick(60)
 
+def leaderDbBuild():
+    """Makes storage file/connection and creates table if not exists"""
+    
+    # creates sqlite connection and creates the db
+    conn = sqlite3.connect('leaderboard.db')
+    c = conn.cursor()
+    # creates the table in the db
+    c.execute("""CREATE TABLE IF NOT EXISTS performanceData (
+                Initials text,
+                Score integer,
+                BubblesPopped integer,
+                ShotsFired integer
+                )""")
+    # 
+    # inserts a row into the table BUT values need to be
+    # established. Those are just placeholders currently
+    #c.execute("INSERT INTO performanceData VALUES (?, ?, ?, ?)", (initials, score, bubblespopped, shotsfired))
+
+    # prints the db for funsies right now
+    c.execute("SELECT * FROM performanceData")
+    print(c.fetchall())
+
+    conn.commit()
+
+    conn.close()
 
 def get_font(size):     # Returns Press-Start-2P in the desired size
     return pygame.font.Font("fonts/Branda-yolq.ttf", size)

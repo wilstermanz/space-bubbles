@@ -123,11 +123,12 @@ class Game:
                             bubble.kill()
                         else:
                             self.misses += 1
+                            self.splat_sound.play()
                             if self.score >= 275:
                                 self.score -= 275
                             else:
                                 self.score = 0
-                                self.splat_sound.play()
+
                             self.bubbles_speed *= 1.1
 
         # bubble player check

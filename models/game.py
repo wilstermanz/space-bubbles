@@ -156,6 +156,8 @@ class Game:
 
             # Update the player sprite
             self.player.update()
+            for player in self.player.sprites():
+                self.shots_fired = player.shots_fired
 
             # Update the bubbles sprite
             self.bubbles.update(self.bubbles_speed, self.bubbles_direction)

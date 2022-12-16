@@ -53,6 +53,7 @@ class Player(pygame.sprite.Sprite):
         self.ready = True           # Bullets can be fired when True
         self.bullet_time = 0
         self.bullet_cooldown = 600  # Bullets can be shot every 600ms
+        self.shots_fired = 0
 
         # Bring in the laser
         self.bullets = pygame.sprite.Group()
@@ -97,6 +98,7 @@ class Player(pygame.sprite.Sprite):
             self.shoot_bullet()
             self.ready = False
             self.bullet_time = pygame.time.get_ticks()
+            self.shots_fired += 1
 
     def recharge(self):
         """

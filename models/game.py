@@ -1,6 +1,8 @@
+from datetime import timedelta
 from models.bubbles import Bubble
 from models.player import Player
 import pygame
+from pygame import time
 import random
 import sys
 
@@ -23,7 +25,13 @@ class Game:
         """
         from main import screen_width, screen_height
 
+        # Game state
         self.game_over = False
+        self.start_time = time.get_ticks()
+        self.current_time = timedelta(
+            milliseconds=time.get_ticks() - self.start_time)
+        self.score_clock = time.get_ticks()
+
         # Player setup
         player_sprite = Player((screen_width / 2, screen_height), 5)
         self.player = pygame.sprite.GroupSingle(player_sprite)
@@ -33,6 +41,12 @@ class Game:
         self.bubbles_setup()
         self.bubbles_speed = 1.5
         self.bubbles_direction = 1
+
+        # Player stats
+        self.score = 0
+        self.shots_fired = 0
+        self.hits = 0
+        self.misses = 0
 
     def rand_color_picker(self):
         """Picks a random color for bubbles"""
@@ -91,8 +105,15 @@ class Game:
                     bullet.kill()
                     for bubble in pops:
                         if bubble.color == bullet.color:
+                            self.hits += 1
+                            self.score += 1000
                             bubble.kill()
                         else:
+                            self.misses += 1
+                            if self.score >= 275:
+                                self.score -= 275
+                            else:
+                                self.score = 0
                             self.bubbles_speed *= 1.1
 
         # bubble player check
@@ -102,6 +123,13 @@ class Game:
             if player_hit:
                 print("fuck you suck")
                 self.game_over = True
+
+    def add_points(self):
+        """Adds 10 points to score each second"""
+        self.clock_check = time.get_ticks()
+        if self.clock_check - self.score_clock >= 1000:
+            self.score += 10
+            self.score_clock = time.get_ticks()
 
     def run(self):
         """
@@ -141,6 +169,11 @@ class Game:
 
             # Collisions
             self.collision_checks()
+
+            self.add_points()
+            print(self.score)
+            self.current_time = timedelta(
+                milliseconds=time.get_ticks() - self.start_time)
 
             pygame.display.flip()
             clock.tick(60)

@@ -31,7 +31,7 @@ def main_menu():
 
     screen.fill((30, 30, 30))
 
-    MenuText = get_font(100).render("MAIN MENU", True, WHITE)
+    MenuText = get_font(70).render("SPACE BUBBLES!!", True, WHITE)
     MenuRect = MenuText.get_rect(center=(300, 100))
 
     PlayButton = Button(image=None,
@@ -77,6 +77,8 @@ def main_menu():
                     # Create a new game instance
                     game = Game()
                     game.run()
+                    name = input()
+                    print(name)
                     screen.fill((30, 30, 30))
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False
@@ -144,18 +146,94 @@ def leaderDbBuild():
                 BubblesPopped integer,
                 ShotsFired integer
                 )""")
-    # 
+    
     # inserts a row into the table BUT values need to be
     # established. Those are just placeholders currently
-    #c.execute("INSERT INTO performanceData VALUES (?, ?, ?, ?)", (initials, score, bubblespopped, shotsfired))
+    #c.execute("INSERT INTO performanceData VALUES (:initials, :score, :bubblespopped, :shotsfired)", ('initials': , 'score': , 'bubblespopped': , 'shotsfired': ))
 
     # prints the db for funsies right now
     c.execute("SELECT * FROM performanceData")
-    print(c.fetchall())
+    print(c.fetchmany(10))
 
     conn.commit()
 
     conn.close()
+    
+def input():
+    """ Gets user name"""
+    name=""
+    NameText = get_font(35).render("What is your name, playa?", True, WHITE)
+    NameRect = NameText.get_rect(center=(300, 100))
+    screen.blit(NameText, NameRect)
+    pygame.display.update()
+    done = True
+    while done:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    name+=str(chr(event.key))
+                if event.key == pygame.K_b:
+                    name+=str(chr(event.key))
+                if event.key == pygame.K_c:
+                    name+=chr(event.key)
+                if event.key == pygame.K_d:
+                    name+=chr(event.key)
+                if event.key == pygame.K_e:
+                    name+=chr(event.key)
+                if event.key == pygame.K_f:
+                    name+=chr(event.key)
+                if event.key == pygame.K_g:
+                    name+=chr(event.key)
+                if event.key == pygame.K_h:
+                    name+=chr(event.key)
+                if event.key == pygame.K_i:
+                    name+=chr(event.key)
+                if event.key == pygame.K_j:
+                    name+=chr(event.key)
+                if event.key == pygame.K_k:
+                    name+=chr(event.key)
+                if event.key == pygame.K_l:
+                    name+=chr(event.key)
+                if event.key == pygame.K_m:
+                    name+=chr(event.key)
+                if event.key == pygame.K_n:
+                    name+=chr(event.key)
+                if event.key == pygame.K_o:
+                    name+=chr(event.key)
+                if event.key == pygame.K_p:
+                    name+=chr(event.key)
+                if event.key == pygame.K_q:
+                    name+=chr(event.key)
+                if event.key == pygame.K_r:
+                    name+=chr(event.key)
+                if event.key == pygame.K_s:
+                    name+=chr(event.key)
+                if event.key == pygame.K_t:
+                    name+=chr(event.key)
+                if event.key == pygame.K_u:
+                    name+=chr(event.key)
+                if event.key == pygame.K_v:
+                    name+=chr(event.key)
+                if event.key == pygame.K_w:
+                    name+=chr(event.key)
+                if event.key == pygame.K_x:
+                    name+=chr(event.key)
+                if event.key == pygame.K_y:
+                    name+=chr(event.key)
+                if event.key == pygame.K_z:
+                    name+=chr(event.key)
+                if event.key == pygame.K_RETURN:
+                    done=False
+    
+    return text1(name,700,30)
+
+def text1(name, x, y):
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("{}".format(name), True, RED)
+    return screen.blit(text, (x,y))
 
 def get_font(size):     # Returns Press-Start-2P in the desired size
     return pygame.font.Font("fonts/Branda-yolq.ttf", size)

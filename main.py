@@ -225,7 +225,7 @@ def leaderDbBuild(game=None, name=""):
 def input():
     """ Gets user name"""
     name=""
-    NamePromptText = get_font(35).render("What is your name, playa?", True, WHITE)
+    NamePromptText = get_font(35).render("What are your initials, playa?", True, WHITE)
     NamePromptRect = NamePromptText.get_rect(center=(300, 100))
     screen.blit(NamePromptText, NamePromptRect)
     # Change background to image
@@ -238,7 +238,7 @@ def input():
             if event.type==pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and len(name) < 3:
                 if event.key == pygame.K_a:
                     name+=str(chr(event.key))
                 if event.key == pygame.K_b:
@@ -313,6 +313,10 @@ def input():
                     name+=chr(event.key)
                 if event.key == pygame.K_SPACE:
                     name+=chr(event.key)
+                if event.key == pygame.K_BACKSPACE:
+                    if len(name) > 0:
+                        name=name[:-1]
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     if len(name) > 0:
                         name=name[:-1]

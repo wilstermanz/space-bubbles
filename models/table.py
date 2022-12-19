@@ -6,7 +6,7 @@ class Table:
     def __init__(self):
         self.rect = pygame.rect.Rect((50, 160, 500, 450))
         # self.background_color = ("BLACK")
-        self.border_color = ("GREEN")
+        self.border_color = ("PURPLE")
         self.font_color = ("WHITE")
         self.scroll_y = 0
         self.is_scroll = False

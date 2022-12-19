@@ -149,7 +149,7 @@ class Game:
     def display_score(self, screen):
         """Displays the current score on the screen"""
         score_surface = self.font.render(f'score: {self.score}', False, WHITE)
-        score_rect = score_surface.get_rect(topleft = (0, 0))
+        score_rect = score_surface.get_rect(topleft = (10, 0))
         screen.blit(score_surface, score_rect)
 
     def display_hits(self, screen):
@@ -163,6 +163,11 @@ class Game:
         level_surface = self.font.render(f'level: {self.level}', False, WHITE)
         level_rect = level_surface.get_rect(topleft = (400, 0))
         screen.blit(level_surface, level_rect)
+
+    def display_time(self, screen):
+        time_surface = self.font.render(f"{str(self.current_time)[2:-5]}", False, WHITE)
+        time_rect = time_surface.get_rect(topright=(590, 0))
+        screen.blit(time_surface, time_rect)
 
     def run(self):
         """
@@ -213,6 +218,7 @@ class Game:
                 milliseconds=time.get_ticks() - self.start_time)
             self.display_score(screen)
             self.display_hits(screen)
+            self.display_time(screen)
             self.display_level(screen)
 
             # Update screen

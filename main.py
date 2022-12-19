@@ -21,12 +21,6 @@ PURPLE = (115, 43, 245)
 screen_width = 600
 screen_height = 600
 
-# # Play music on start
-# pygame.mixer.init()
-# music = pygame.mixer.Sound('audio/menu_music.wav')
-# music.set_volume(0.2)
-# music.play(loops = -1)
-
 # Initialize the screen and game clock
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
@@ -97,7 +91,7 @@ def main_menu():
                     game = Game()
                     game.run()
                     name = input()
-                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, game.hits, game.shots_fired, game.misses))
+                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, (game.hits + (40 * game.level)), game.shots_fired, game.misses))
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
                 if LeaderBoardButton.checkForInput(MenuMouse):
@@ -317,7 +311,6 @@ def input():
                 if event.key == pygame.K_RETURN:
                     done = False
             
-            # screen.fill((30, 30, 30))
             screen.blit(bg_image, bg_image.get_rect())
             NameText = get_font(30).render(name, True, GREEN)
             NameRect = NameText.get_rect(center=(300, 200))

@@ -1,9 +1,10 @@
 import pygame
-from main import
 
 class Table:
+    from main import screen
+    
     def __init__(self):
-        self.rect = pygame.rect.Rect((50, 0, 400, 500))
+        self.rect = pygame.rect.Rect((50, 175, 500, 450))
         # self.background_color = ("BLACK")
         self.border_color = ("GREEN")
         self.font_color = ("WHITE")
@@ -51,7 +52,7 @@ class Table:
         self.rect.width, self.rect.height = width, height
         self.load_sprites()
 
-    def draw(self, screen: pygame.Surface, width=1):
+    def draw(self, screen: screen, width=1):
         font = pygame.font.Font(None, 30)
         if self.is_up:
             self.move_data(True)

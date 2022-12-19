@@ -122,11 +122,18 @@ def leaderboard():
     
     table = Table()
     table.set_column_num(5)
-    table.set_row_num(10, 30)
-    table.resize(517, 300)
-    for i in range(len(leaders)):
+    table.set_row_num(11, 30)
+    table.resize(517, 330)
+    table.set_text(0, 0, f"Initials")
+    table.set_text(0, 1, f"Score")
+    table.set_text(0, 2, f"# Popped")
+    table.set_text(0, 3, f"# Fired")
+    table.set_text(0, 4, f"Misses")
+    
+        
+    for i in range(1, 11):
         for j in range(5):
-            table.set_text(i, j, f"{leaders[i][j]}")
+            table.set_text(i, j, f"{leaders[i - 1][j]}")
 
 
     # screen.fill((30, 30, 30))

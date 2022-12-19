@@ -4,7 +4,7 @@ class Table:
     from main import screen
     
     def __init__(self):
-        self.rect = pygame.rect.Rect((50, 175, 500, 450))
+        self.rect = pygame.rect.Rect((50, 160, 500, 450))
         # self.background_color = ("BLACK")
         self.border_color = ("GREEN")
         self.font_color = ("WHITE")

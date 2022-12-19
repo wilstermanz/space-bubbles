@@ -91,7 +91,7 @@ def main_menu():
                     game = Game()
                     game.run()
                     name = input()
-                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, (game.hits + (40 * game.level)), game.shots_fired, game.misses))
+                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, (game.hits + (40 * game.level - 1)), game.shots_fired, game.misses))
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
                 if LeaderBoardButton.checkForInput(MenuMouse):

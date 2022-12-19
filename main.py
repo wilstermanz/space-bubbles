@@ -21,12 +21,6 @@ PURPLE = (115, 43, 245)
 screen_width = 600
 screen_height = 600
 
-# # Play music on start
-# pygame.mixer.init()
-# music = pygame.mixer.Sound('audio/menu_music.wav')
-# music.set_volume(0.2)
-# music.play(loops = -1)
-
 # Initialize the screen and game clock
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
@@ -97,7 +91,7 @@ def main_menu():
                     game = Game()
                     game.run()
                     name = input()
-                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, game.hits, game.shots_fired, game.misses))
+                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, (game.hits + (40 * game.level)), game.shots_fired, game.misses))
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
                 if LeaderBoardButton.checkForInput(MenuMouse):
@@ -128,30 +122,19 @@ def leaderboard():
     
     table = Table()
     table.set_column_num(5)
-    table.set_row_num(10, 30)
-    table.resize(517, 300)
-    for i in range(len(leaders)):
+    table.set_row_num(11, 30)
+    table.resize(517, 330)
+    table.set_text(0, 0, f"Initials")
+    table.set_text(0, 1, f"Score")
+    table.set_text(0, 2, f"# Popped")
+    table.set_text(0, 3, f"# Fired")
+    table.set_text(0, 4, f"Misses")
+    
+        
+    for i in range(1, 11):
         for j in range(5):
-            table.set_text(i, j, f"{leaders[i][j]}")
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4:
-                    table.move_data(False)
-                elif event.button == 5:
-                    table.move_data(True)
-                elif event.button == 1:
-                    table.scroll(event)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    table.scroll(event)
-            elif event.type == pygame.MOUSEMOTION:
-                table.scroll(event)
-        screen.blit(bg_image, bg_image.get_rect())
-        pygame.display.flip()
+            table.set_text(i, j, f"{leaders[i - 1][j]}")
+
 
     # screen.fill((30, 30, 30))
     screen.blit(bg_image, bg_image.get_rect())
@@ -168,8 +151,9 @@ def leaderboard():
     screen.blit(LeaderboardText, LeaderboardRect)
     conn.close()
 
+    pygame.display.set_caption("Leaderboard")
+
     while True:
-        pygame.display.set_caption("Leaderboard")
 
         MenuMouse = pygame.mouse.get_pos()
 
@@ -206,8 +190,7 @@ def leaderDbBuild(game=None, name=""):
                 ShotsMissed integer
                 )""")
     
-    # inserts a row into the table BUT values need to be
-    # established. Those are just placeholders currently
+    # inserts a row into the table if it was an instance of a game play
     if game is not None:
         c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
 
@@ -317,7 +300,6 @@ def input():
                 if event.key == pygame.K_RETURN:
                     done = False
             
-            # screen.fill((30, 30, 30))
             screen.blit(bg_image, bg_image.get_rect())
             NameText = get_font(30).render(name, True, GREEN)
             NameRect = NameText.get_rect(center=(300, 200))

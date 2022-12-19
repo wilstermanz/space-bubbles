@@ -282,6 +282,26 @@ def input():
                     name+=chr(event.key)
                 if event.key == pygame.K_z:
                     name+=chr(event.key)
+                if event.key == pygame.K_1:
+                    name+=chr(event.key)
+                if event.key == pygame.K_2:
+                    name+=chr(event.key)
+                if event.key == pygame.K_3:
+                    name+=chr(event.key)
+                if event.key == pygame.K_4:
+                    name+=chr(event.key)
+                if event.key == pygame.K_5:
+                    name+=chr(event.key)
+                if event.key == pygame.K_6:
+                    name+=chr(event.key)
+                if event.key == pygame.K_7:
+                    name+=chr(event.key)
+                if event.key == pygame.K_8:
+                    name+=chr(event.key)
+                if event.key == pygame.K_9:
+                    name+=chr(event.key)
+                if event.key == pygame.K_0:
+                    name+=chr(event.key)
                 if event.key == pygame.K_SPACE:
                     name+=chr(event.key)
                 if event.key == pygame.K_BACKSPACE:

@@ -215,11 +215,7 @@ def leaderDbBuild(game=None, name=""):
 
     # prints the db for funsies right now
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
-    print(c.fetchmany(10))
-
-
     conn.commit()
-
     conn.close()
     
 def input():
@@ -235,93 +231,93 @@ def input():
     done = True
     while done:
         for event in pygame.event.get():
-            if event.type==pygame.QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN and len(name) < 3:
                 if event.key == pygame.K_a:
-                    name+=str(chr(event.key))
+                    name += str(chr(event.key))
                 if event.key == pygame.K_b:
-                    name+=str(chr(event.key))
+                    name += str(chr(event.key))
                 if event.key == pygame.K_c:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_d:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_e:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_f:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_g:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_h:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_i:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_j:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_k:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_l:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_m:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_n:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_o:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_p:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_q:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_r:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_s:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_t:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_u:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_v:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_w:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_x:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_y:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_z:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_1:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_2:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_3:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_4:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_5:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_6:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_7:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_8:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_9:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_0:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_SPACE:
-                    name+=chr(event.key)
+                    name += chr(event.key)
                 if event.key == pygame.K_BACKSPACE:
                     if len(name) > 0:
-                        name=name[:-1]
+                        name = name[:-1]
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     if len(name) > 0:
-                        name=name[:-1]
+                        name = name[:-1]
                 if event.key == pygame.K_RETURN:
-                    done=False
+                    done = False
             
             # screen.fill((30, 30, 30))
             screen.blit(bg_image, bg_image.get_rect())

@@ -48,6 +48,7 @@ class Game:
         self.shots_fired = 0
         self.hits = 0
         self.misses = 0
+        self.level = 1
 
         # Audio
         self.bullet_sound = pygame.mixer.Sound('audio/laser.wav')
@@ -153,9 +154,15 @@ class Game:
 
     def display_hits(self, screen):
         """Displays the number of hits next to score"""
-        hits_surface = self.font.render(f'hits: {self.hits}', False, WHITE)
+        hits_surface = self.font.render(f'hits: {self.hits + 40 * (self.level - 1)}', False, WHITE)
         hits_rect = hits_surface.get_rect(topleft = (200, 0))
         screen.blit(hits_surface, hits_rect)
+
+    def display_level(self, screen):
+        """Displays the current level"""
+        level_surface = self.font.render(f'level: {self.level}', False, WHITE)
+        level_rect = level_surface.get_rect(topleft = (400, 0))
+        screen.blit(level_surface, level_rect)
 
     def run(self):
         """
@@ -206,14 +213,16 @@ class Game:
                 milliseconds=time.get_ticks() - self.start_time)
             self.display_score(screen)
             self.display_hits(screen)
+            self.display_level(screen)
 
             # Update screen
             pygame.display.flip()
             clock.tick(60)
 
             # Start new level when all bubbles popped
-            if self.hits % 40 == 0 and self.hits != 0:
-                self.hits = self.hits + 1
+            if self.hits % 40 == 0 and self.hits > 0:
+                self.hits = 0
+                self.level = self.level + 1
                 print("Cleared Screen")
                 self.bubbles_setup(5, 8, 60, 60, 5, 30)
                 self.bubbles.draw(screen)

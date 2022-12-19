@@ -1,9 +1,10 @@
 import pygame
+from main import
 
 class Table:
     def __init__(self):
-        self.rect = pygame.rect.Rect((0, 0, 400, 500))
-        self.background_color = ("BLACK")
+        self.rect = pygame.rect.Rect((50, 0, 400, 500))
+        # self.background_color = ("BLACK")
         self.border_color = ("GREEN")
         self.font_color = ("WHITE")
         self.scroll_y = 0
@@ -65,7 +66,7 @@ class Table:
                                  (x, y, self.column_sizes[col], self.row_sizes[row]), width)
                 text = font.render(self.data[row][col], True, self.font_color)
                 string = pygame.Surface((self.column_sizes[col] - 2 * width, self.row_sizes[row] - 2 * width))
-                string.fill(self.background_color)
+                # string.fill(self.background_color)
                 string.blit(text, (5, 5))
                 surface.blit(string, (x + width, y + width))
                 x += self.column_sizes[col]

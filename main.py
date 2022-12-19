@@ -37,6 +37,9 @@ pygame.display.set_caption("Menu")
 def main_menu():
     """ Main Menu Screen """
 
+    # Change background to image
+    bg_image = pygame.image.load('images/background.png')
+
     # Play music on start
     pygame.mixer.init()
     music = pygame.mixer.Sound('audio/menu_music.wav')
@@ -45,7 +48,8 @@ def main_menu():
 
     pygame.display.set_caption("Menu")
 
-    screen.fill((30, 30, 30))
+    # screen.fill((30, 30, 30))
+    screen.blit(bg_image, bg_image.get_rect())
 
     MenuText = get_font(85).render("SPACE BUBBLES!!", True, PURPLE)
     MenuRect = MenuText.get_rect(center=(300, 100))
@@ -96,7 +100,7 @@ def main_menu():
                     name = input()
                     print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, game.hits, game.shots_fired, game.misses))
                     leaderDbBuild(game, name)
-                    screen.fill((30, 30, 30))
+                    screen.blit(bg_image, bg_image.get_rect())
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False
                     leaderboard()
@@ -112,6 +116,9 @@ def main_menu():
 def leaderboard():
     """Place holder for pulling and displaying a leaderboard"""
     
+    # Change background to image
+    bg_image = pygame.image.load('images/background.png')
+
     leaderDbBuild()
     conn = sqlite3.connect('leaderboard.db')
     c = conn.cursor()
@@ -121,7 +128,7 @@ def leaderboard():
     table = Table()
     table.set_column_num(5)
     table.set_row_num(100, 30)
-    table.resize(500, 250)
+    table.resize(500, 600)
     for i in range(len(leaders)):
         for j in range(5):
             table.set_text(i, j, f"{leaders[i][j]}")
@@ -142,13 +149,12 @@ def leaderboard():
                     table.scroll(event)
             elif event.type == pygame.MOUSEMOTION:
                 table.scroll(event)
-        screen.fill("BLACK")
+        screen.blit(bg_image, bg_image.get_rect())
         table.draw(screen)
         pygame.display.flip()
-    
-    
 
-    screen.fill((30, 30, 30))
+    # screen.fill((30, 30, 30))
+    screen.blit(bg_image, bg_image.get_rect())
 
     MenuMouse = pygame.mouse.get_pos()
 
@@ -221,6 +227,8 @@ def input():
     NamePromptText = get_font(35).render("What is your name, playa?", True, WHITE)
     NamePromptRect = NamePromptText.get_rect(center=(300, 100))
     screen.blit(NamePromptText, NamePromptRect)
+    # Change background to image
+    bg_image = pygame.image.load('images/background.png')
 
     pygame.display.update()
     done = True
@@ -310,7 +318,8 @@ def input():
                 if event.key == pygame.K_RETURN:
                     done=False
             
-            screen.fill((30, 30, 30))
+            # screen.fill((30, 30, 30))
+            screen.blit(bg_image, bg_image.get_rect())
             NameText = get_font(30).render(name, True, GREEN)
             NameRect = NameText.get_rect(center=(300, 200))
             screen.blit(NamePromptText, NamePromptRect)

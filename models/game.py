@@ -166,9 +166,12 @@ class Game:
         """
         from main import screen
         from main import clock
+        # Load background image
+        bg_image = pygame.image.load('images/background.png')
         while self.game_over is False:
 
-            screen.fill(BLACK)
+            # screen.fill(BLACK)
+            screen.blit(bg_image, bg_image.get_rect())
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

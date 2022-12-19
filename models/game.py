@@ -107,6 +107,8 @@ class Game:
 
     def collision_checks(self):
         # player bullets pop bubbles
+        if ((self.hits - 1) % 40) == 0:
+            self.hits = self.hits - 1
         if self.player.sprite.bullets:
             for bullet in self.player.sprite.bullets:
                 pops = pygame.sprite.spritecollide(bullet, self.bubbles, False)

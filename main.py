@@ -3,7 +3,6 @@ from models.button import Button
 import pygame
 import sys
 import sqlite3
-from models.table import Table
 
 
 pygame.init()
@@ -114,6 +113,8 @@ def main_menu():
 
 
 def leaderboard():
+    from models.table import Table
+    
     """Place holder for pulling and displaying a leaderboard"""
     
     # Change background to image
@@ -127,8 +128,8 @@ def leaderboard():
     
     table = Table()
     table.set_column_num(5)
-    table.set_row_num(100, 30)
-    table.resize(500, 600)
+    table.set_row_num(10, 30)
+    table.resize(517, 300)
     for i in range(len(leaders)):
         for j in range(5):
             table.set_text(i, j, f"{leaders[i][j]}")

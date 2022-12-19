@@ -133,25 +133,7 @@ def leaderboard():
     for i in range(len(leaders)):
         for j in range(5):
             table.set_text(i, j, f"{leaders[i][j]}")
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4:
-                    table.move_data(False)
-                elif event.button == 5:
-                    table.move_data(True)
-                elif event.button == 1:
-                    table.scroll(event)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    table.scroll(event)
-            elif event.type == pygame.MOUSEMOTION:
-                table.scroll(event)
-        screen.blit(bg_image, bg_image.get_rect())
-        pygame.display.flip()
+
 
     # screen.fill((30, 30, 30))
     screen.blit(bg_image, bg_image.get_rect())
@@ -168,8 +150,9 @@ def leaderboard():
     screen.blit(LeaderboardText, LeaderboardRect)
     conn.close()
 
+    pygame.display.set_caption("Leaderboard")
+
     while True:
-        pygame.display.set_caption("Leaderboard")
 
         MenuMouse = pygame.mouse.get_pos()
 
@@ -206,8 +189,7 @@ def leaderDbBuild(game=None, name=""):
                 ShotsMissed integer
                 )""")
     
-    # inserts a row into the table BUT values need to be
-    # established. Those are just placeholders currently
+    # inserts a row into the table if it was an instance of a game play
     if game is not None:
         c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
 

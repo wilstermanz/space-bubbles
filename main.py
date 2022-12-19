@@ -151,13 +151,10 @@ def leaderboard():
             elif event.type == pygame.MOUSEMOTION:
                 table.scroll(event)
         screen.blit(bg_image, bg_image.get_rect())
-        table.draw(screen)
         pygame.display.flip()
 
     # screen.fill((30, 30, 30))
     screen.blit(bg_image, bg_image.get_rect())
-
-    MenuMouse = pygame.mouse.get_pos()
 
     LeaderboardText = get_font(100).render("Leaderboard", True, PURPLE)
     LeaderboardRect = LeaderboardText.get_rect(center=(screen_width // 2, 100))
@@ -187,7 +184,8 @@ def leaderboard():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if BackButton.checkForInput(MenuMouse):
                     main_menu()
-
+        
+        table.draw(screen)
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)

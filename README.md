@@ -52,13 +52,13 @@ This is Space Bubbles, a mashup of Space Invaders and Bubble Shooter. It's purpo
 3. Navigate to the forked repository and type in this command in your command line `python3 ./main.py`
 
 # Game Play Instructions
- <img src="https://i.postimg.cc/BnFqn8fw/main-menu.png">
+ <img src="https://i.postimg.cc/N0cbfh7T/Screenshot-2022-12-19-143625.png">
 
  - In the main menu, click on Play to begin a new game
 
 <br>
  
- <img src="https://i.postimg.cc/SKpm2yyQ/gameplay.png">
+ <img src="https://i.postimg.cc/jjtQYHt4/Screenshot-2022-12-19-143710.png">
 
  - In the game, your player spaceship will change color to match the
    color of dart that will be shot next

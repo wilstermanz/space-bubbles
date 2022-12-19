@@ -124,7 +124,7 @@ def leaderboard():
     conn = sqlite3.connect('leaderboard.db')
     c = conn.cursor()
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
-    leaders = c.fetchall()
+    leaders = c.fetchmany(10)
     
     table = Table()
     table.set_column_num(5)

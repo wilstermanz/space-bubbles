@@ -116,14 +116,14 @@ def leaderboard():
     conn = sqlite3.connect('leaderboard.db')
     c = conn.cursor()
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
-    leaders = c.fetchmany(10)
+    leaders = c.fetchall()
     
     table = Table()
     table.set_column_num(5)
     table.set_row_num(100, 30)
     table.resize(500, 250)
-    for i in range(9):
-        for j in range(4):
+    for i in range(len(leaders)):
+        for j in range(5):
             table.set_text(i, j, f"{leaders[i][j]}")
     running = True
     while running:

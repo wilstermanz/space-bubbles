@@ -212,5 +212,8 @@ class Game:
             clock.tick(60)
 
             # Exit game when all bubbles popped
-            if self.hits == 40:
-                return
+            if self.hits % 40 == 0 and self.hits != 0:
+                print("Cleared Screen")
+                self.bubbles_setup(5, 8, 60, 60, 5, 30)
+                self.bubbles.draw(screen)
+                self.hits = self.hits + 1

@@ -107,6 +107,8 @@ class Game:
 
     def collision_checks(self):
         # player bullets pop bubbles
+        if ((self.hits - 1) % 40) == 0:
+            self.hits = self.hits - 1
         if self.player.sprite.bullets:
             for bullet in self.player.sprite.bullets:
                 pops = pygame.sprite.spritecollide(bullet, self.bubbles, False)
@@ -212,5 +214,8 @@ class Game:
             clock.tick(60)
 
             # Exit game when all bubbles popped
-            if self.hits == 40:
-                return
+            if self.hits % 40 == 0 and self.hits != 0:
+                print("Cleared Screen")
+                self.bubbles_setup(5, 8, 60, 60, 5, 30)
+                self.bubbles.draw(screen)
+                self.hits = self.hits + 1

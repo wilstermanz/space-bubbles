@@ -185,7 +185,7 @@ def leaderDbBuild(game=None, name=""):
     
     # inserts a row into the table if it was an instance of a game play
     if game is not None:
-        c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
+        c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': (game.hits + (40 * game.level - 1)), 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
 
     # prints the db for funsies right now
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")

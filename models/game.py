@@ -39,7 +39,7 @@ class Game:
         # Bubble setup
         self.bubbles = pygame.sprite.Group()
         self.bubbles_setup()
-        self.bubbles_speed = 1.5
+        self.bubbles_speed = 1
         self.bubbles_direction = 1
 
         # Player stats
@@ -47,6 +47,7 @@ class Game:
         self.font = pygame.font.Font('fonts/default.ttf', 20)
         self.shots_fired = 0
         self.hits = 0
+        self.hits_this_lvl = 0
         self.misses = 0
         self.level = 1
 
@@ -117,18 +118,18 @@ class Game:
                         if bubble.color == bullet.color:
                             self.pop_sound.play()
                             self.hits += 1
+                            self.hits_this_lvl += 1
                             self.score += 1000
                             bubble.kill()
                             print(self.score)
                         else:
-                            self.misses += 1
                             self.splat_sound.play()
+                            self.misses += 1
                             if self.score >= 275:
                                 self.score -= 275
                             else:
                                 self.score = 0
-
-                            self.bubbles_speed *= 1.1
+                            self.bubbles_speed += 0.3
                             print(self.score)
 
         # bubble player check
@@ -139,37 +140,37 @@ class Game:
                 print("fuck you suck")
                 self.game_over = True
 
-    def add_points(self):
-        """Adds 10 points to score each second"""
+    def time_points(self):
+        """Removes 10 points to score each second"""
         self.clock_check = time.get_ticks()
-        if self.clock_check - self.score_clock >= 1000:
-            self.score += 10
+        if self.clock_check - self.score_clock >= 1000 and self.score >= 10:
+            self.score -= 10
             self.score_clock = time.get_ticks()
-    
+
     def display_score(self, screen):
         """Displays the current score on the screen"""
         score_surface = self.font.render(f'score: {self.score}', False, WHITE)
-        score_rect = score_surface.get_rect(topleft = (10, 0))
+        score_rect = score_surface.get_rect(topleft=(10, 0))
         screen.blit(score_surface, score_rect)
 
     def display_hits(self, screen):
         """Displays the number of hits next to score"""
         from main import screen_width
         hits_surface = self.font.render(f'hits: {self.hits + 40 * (self.level - 1)}', False, WHITE)
-        hits_rect = hits_surface.get_rect(topleft = (screen_width * (1 / 3), 0))
+        hits_rect = hits_surface.get_rect(topleft=(screen_width * (1 / 3), 0))
         screen.blit(hits_surface, hits_rect)
 
     def display_level(self, screen):
         """Displays the current level"""
         from main import screen_width
         level_surface = self.font.render(f'level: {self.level}', False, WHITE)
-        level_rect = level_surface.get_rect(topright = (screen_width * (2 / 3), 0))
+        level_rect = level_surface.get_rect(topright=(screen_width * (2 / 3), 0))
         screen.blit(level_surface, level_rect)
 
     def display_time(self, screen):
         from main import screen_width
         time_surface = self.font.render(f"{str(self.current_time)[2:-5]}", False, WHITE)
-        time_rect = time_surface.get_rect(topright=(590, 0))
+        time_rect = time_surface.get_rect(topright=(screen_width - 10, 0))
         screen.blit(time_surface, time_rect)
 
     def run(self):
@@ -216,7 +217,7 @@ class Game:
             self.collision_checks()
 
             # update points and time clock
-            self.add_points()
+            self.time_points()
             self.current_time = timedelta(
                 milliseconds=time.get_ticks() - self.start_time)
             self.display_score(screen)
@@ -230,8 +231,8 @@ class Game:
 
             # Start new level when all bubbles popped
             if self.hits % 40 == 0 and self.hits > 0:
-                self.hits = 0
-                self.level = self.level + 1
+                self.hits_this_lvl = 0
+                self.level += 1
                 print("Cleared Screen")
                 self.bubbles_setup(5, 8, 60, 60, 5, 30)
                 self.bubbles.draw(screen)

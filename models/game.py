@@ -44,7 +44,7 @@ class Game:
 
         # Player stats
         self.score = 0
-        self.font = pygame.font.Font('fonts/CaveatBrush-Regular.ttf', 20)
+        self.font = pygame.font.Font('fonts/default.ttf', 20)
         self.shots_fired = 0
         self.hits = 0
         self.misses = 0

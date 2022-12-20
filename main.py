@@ -38,7 +38,7 @@ def main_menu():
     pygame.mixer.init()
     music = pygame.mixer.Sound('audio/menu_music.wav')
     music.set_volume(0.2)
-    music.play(loops = -1)
+    music.play(loops=-1)
 
     pygame.display.set_caption("Menu")
 
@@ -48,10 +48,12 @@ def main_menu():
     MenuTextL1 = get_font(85, 'title').render("Space", True, PURPLE)
     MenuRectL1 = MenuTextL1.get_rect(center=(300, 90))
     MenuTextL2 = get_font(85, 'title').render("Bubbles", True, PURPLE)
-    MenuRectL2 = MenuTextL2.get_rect(center=(300, 70 + MenuTextL1.get_height()))
+    MenuRectL2 = MenuTextL2.get_rect(
+        center=(300, 70 + MenuTextL1.get_height()))
 
     quoteText = get_font(18, 'quote').render(f'"{get_quote()}."', True, YELLOW)
-    quoteRect = quoteText.get_rect(center=(screen_width / 2, screen_height - 90))
+    quoteRect = quoteText.get_rect(
+        center=(screen_width / 2, screen_height - 90))
 
     PlayButton = Button(image=None,
                         pos=(300, 250),
@@ -115,9 +117,9 @@ def main_menu():
 
 def leaderboard():
     from models.table import Table
-    
+
     """Place holder for pulling and displaying a leaderboard"""
-    
+
     # Change background to image
     bg_image = pygame.image.load('images/background.png')
 
@@ -126,7 +128,7 @@ def leaderboard():
     c = conn.cursor()
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
     leaders = c.fetchmany(10)
-    
+
     table = Table()
     table.set_column_num(5)
     table.set_row_num(11, 30)
@@ -136,14 +138,12 @@ def leaderboard():
     table.set_text(0, 2, f"# Popped")
     table.set_text(0, 3, f"# Fired")
     table.set_text(0, 4, f"Misses")
-    
+
     if len(leaders) > 0:
         for i in range(1, len(leaders) + 1):
             for j in range(5):
                 table.set_text(i, j, f"{leaders[i - 1][j]}")
 
-
-    # screen.fill((30, 30, 30))
     screen.blit(bg_image, bg_image.get_rect())
 
     LeaderboardText = get_font(100).render("Leaderboard", True, PURPLE)
@@ -175,16 +175,15 @@ def leaderboard():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if BackButton.checkForInput(MenuMouse):
                     main_menu()
-        
+
         table.draw(screen)
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
 
+
 def leaderDbBuild(game=None, name=""):
     """Makes storage file/connection and creates table if not exists"""
-    
-    
     # creates sqlite connection and creates the db
     conn = sqlite3.connect('leaderboard.db')
     c = conn.cursor()
@@ -196,19 +195,27 @@ def leaderDbBuild(game=None, name=""):
                 ShotsFired integer,
                 ShotsMissed integer
                 )""")
-    
+
     # inserts a row into the table if it was an instance of a game play
     if game is not None:
-        c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
+        c.execute("INSERT INTO performanceData VALUES(:name,"
+                  ":score, :bubblespopped, :shotsfired, :shotsmissed)",
+                  {'name': name,
+                   'score': game.score,
+                   'bubblespopped': game.hits,
+                   'shotsfired': game.shots_fired,
+                   'shotsmissed': game.misses})
 
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
     conn.commit()
     conn.close()
-    
+
+
 def input():
     """ Gets user name"""
-    name=""
-    NamePromptText = get_font(35).render("What are your initials, playa?", True, WHITE)
+    name = ""
+    NamePromptText = get_font(35).render(
+        "What are your initials, playa?", True, WHITE)
     NamePromptRect = NamePromptText.get_rect(center=(300, 100))
     screen.blit(NamePromptText, NamePromptRect)
     # Change background to image
@@ -305,7 +312,7 @@ def input():
                         name = name[:-1]
                 if event.key == pygame.K_RETURN:
                     done = False
-            
+
             screen.blit(bg_image, bg_image.get_rect())
             NameText = get_font(30).render(name, True, GREEN)
             NameRect = NameText.get_rect(center=(300, 200))
@@ -319,10 +326,10 @@ def input():
 def text1(name, x, y):
     font = pygame.font.SysFont(None, 25)
     text = font.render("{}".format(name), True, RED)
-    return screen.blit(text, (x,y))
+    return screen.blit(text, (x, y))
 
 
-def get_font(size, font="default"):     # Returns Press-Start-2P in the desired size
+def get_font(size, font="default"):
     if font == "title":
         return pygame.font.Font("fonts/title.ttf", size)
     if font == "quote":
@@ -344,6 +351,7 @@ def get_quote():
             return error
     except Exception:
         return error
+
 
 if __name__ == '__main__':
     # Run the main game loop when the program is executed

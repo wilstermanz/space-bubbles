@@ -154,17 +154,20 @@ class Game:
 
     def display_hits(self, screen):
         """Displays the number of hits next to score"""
+        from main import screen_width
         hits_surface = self.font.render(f'hits: {self.hits + 40 * (self.level - 1)}', False, WHITE)
-        hits_rect = hits_surface.get_rect(topleft = (200, 0))
+        hits_rect = hits_surface.get_rect(topleft = (screen_width * (1 / 3), 0))
         screen.blit(hits_surface, hits_rect)
 
     def display_level(self, screen):
         """Displays the current level"""
+        from main import screen_width
         level_surface = self.font.render(f'level: {self.level}', False, WHITE)
-        level_rect = level_surface.get_rect(topleft = (400, 0))
+        level_rect = level_surface.get_rect(topright = (screen_width * (2 / 3), 0))
         screen.blit(level_surface, level_rect)
 
     def display_time(self, screen):
+        from main import screen_width
         time_surface = self.font.render(f"{str(self.current_time)[2:-5]}", False, WHITE)
         time_rect = time_surface.get_rect(topright=(590, 0))
         screen.blit(time_surface, time_rect)

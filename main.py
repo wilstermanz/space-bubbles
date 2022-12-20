@@ -378,7 +378,7 @@ def get_font(size, font="default"):
 
 def get_quote():
     """Uses an API to get a random techy soundy quote"""
-    error = "You should really get to fixing your flux resistance"
+    error = "You should really get to fixing your flux connector"
     try:
         r = requests.get("https://techy-api.vercel.app/api/json")
         while len(r.json()["message"]) > 55:

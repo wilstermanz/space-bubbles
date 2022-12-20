@@ -49,7 +49,7 @@ def main_menu():
     MenuRectL1 = MenuTextL1.get_rect(center=(300, 90))
     MenuTextL2 = get_font(85, 'title').render("Bubbles", True, PURPLE)
     MenuRectL2 = MenuTextL2.get_rect(
-        center=(300, 70 + MenuTextL1.get_height()))
+        center=(300, MenuRectL1.bottom + 20))
 
     quoteText = get_font(18, 'quote').render(f'"{get_quote()}."', True, YELLOW)
     quoteRect = quoteText.get_rect(
@@ -100,7 +100,10 @@ def main_menu():
                     # Create a new game instance
                     game = Game()
                     game.run()
-                    name = input()
+                    name = input(game.score,
+                                 game.hits,
+                                 game.level,
+                                 game.current_time)
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
                 if LeaderBoardButton.checkForInput(MenuMouse):
@@ -211,13 +214,42 @@ def leaderDbBuild(game=None, name=""):
     conn.close()
 
 
-def input():
+def input(score, hits, level, time):
     """ Gets user name"""
+
     name = ""
     NamePromptText = get_font(35).render(
         "What are your initials, playa?", True, WHITE)
     NamePromptRect = NamePromptText.get_rect(center=(300, 100))
-    screen.blit(NamePromptText, NamePromptRect)
+
+    GameStatsSurface = pygame.surface.Surface((screen_width * 0.8, 200))
+    GameStatsSurface.fill((50, 50, 50))
+    GameStatsRect = GameStatsSurface.get_rect(
+        center=(screen_width / 2, screen_height * (2 / 3)))
+
+    levelText = get_font(40).render(f'You made it to level {level}!',
+                                    True, WHITE)
+    levelRect = levelText.get_rect(
+        midbottom=(GameStatsRect.centerx, GameStatsRect.top - 10))
+
+    scoreText = get_font(35).render(f'Score: {score}', True, WHITE)
+    scoreRect = scoreText.get_rect(
+        midbottom=(GameStatsRect.centerx,
+                   GameStatsRect.top + (GameStatsRect.height * (1 / 3)) - 10)
+        )
+
+    hitsText = get_font(35).render(f'Bubbles popped: {hits}',
+                                   True, WHITE)
+    hitsRect = hitsText.get_rect(
+        center=(GameStatsRect.center))
+
+    timeText = get_font(35).render(f'Time: {str(time)[2:-5]}',
+                                   True, WHITE)
+    timeRect = timeText.get_rect(
+        midtop=(GameStatsRect.centerx,
+                GameStatsRect.top + (GameStatsRect.height * (2 / 3)) + 10)
+    )
+
     # Change background to image
     bg_image = pygame.image.load('images/background.png')
 
@@ -230,57 +262,57 @@ def input():
                 quit()
             if event.type == pygame.KEYDOWN and len(name) < 3:
                 if event.key == pygame.K_a:
-                    name += str(chr(event.key))
+                    name += 'A'
                 if event.key == pygame.K_b:
-                    name += str(chr(event.key))
+                    name += 'B'
                 if event.key == pygame.K_c:
-                    name += chr(event.key)
+                    name += 'C'
                 if event.key == pygame.K_d:
-                    name += chr(event.key)
+                    name += 'D'
                 if event.key == pygame.K_e:
-                    name += chr(event.key)
+                    name += 'E'
                 if event.key == pygame.K_f:
-                    name += chr(event.key)
+                    name += 'F'
                 if event.key == pygame.K_g:
-                    name += chr(event.key)
+                    name += 'G'
                 if event.key == pygame.K_h:
-                    name += chr(event.key)
+                    name += 'H'
                 if event.key == pygame.K_i:
-                    name += chr(event.key)
+                    name += 'I'
                 if event.key == pygame.K_j:
-                    name += chr(event.key)
+                    name += 'J'
                 if event.key == pygame.K_k:
-                    name += chr(event.key)
+                    name += 'K'
                 if event.key == pygame.K_l:
-                    name += chr(event.key)
+                    name += 'L'
                 if event.key == pygame.K_m:
-                    name += chr(event.key)
+                    name += 'M'
                 if event.key == pygame.K_n:
-                    name += chr(event.key)
+                    name += 'N'
                 if event.key == pygame.K_o:
-                    name += chr(event.key)
+                    name += 'O'
                 if event.key == pygame.K_p:
-                    name += chr(event.key)
+                    name += 'P'
                 if event.key == pygame.K_q:
-                    name += chr(event.key)
+                    name += 'Q'
                 if event.key == pygame.K_r:
-                    name += chr(event.key)
+                    name += 'R'
                 if event.key == pygame.K_s:
-                    name += chr(event.key)
+                    name += 'S'
                 if event.key == pygame.K_t:
-                    name += chr(event.key)
+                    name += 'T'
                 if event.key == pygame.K_u:
-                    name += chr(event.key)
+                    name += 'U'
                 if event.key == pygame.K_v:
-                    name += chr(event.key)
+                    name += 'V'
                 if event.key == pygame.K_w:
-                    name += chr(event.key)
+                    name += 'W'
                 if event.key == pygame.K_x:
-                    name += chr(event.key)
+                    name += 'X'
                 if event.key == pygame.K_y:
-                    name += chr(event.key)
+                    name += 'Y'
                 if event.key == pygame.K_z:
-                    name += chr(event.key)
+                    name += 'Z'
                 if event.key == pygame.K_1:
                     name += chr(event.key)
                 if event.key == pygame.K_2:
@@ -314,10 +346,16 @@ def input():
                     done = False
 
             screen.blit(bg_image, bg_image.get_rect())
-            NameText = get_font(30).render(name, True, GREEN)
-            NameRect = NameText.get_rect(center=(300, 200))
+            NameText = get_font(50).render(name, True, GREEN)
+            NameRect = NameText.get_rect(center=(300, 190))
+            screen.blit(GameStatsSurface, GameStatsRect)
             screen.blit(NamePromptText, NamePromptRect)
             screen.blit(NameText, NameRect)
+            screen.blit(scoreText, scoreRect)
+            screen.blit(hitsText, hitsRect)
+            screen.blit(levelText, levelRect)
+            screen.blit(timeText, timeRect)
+
             pygame.display.update()
 
     return name

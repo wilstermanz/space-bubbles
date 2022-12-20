@@ -1,6 +1,7 @@
 from models.game import Game
 from models.button import Button
 import pygame
+import requests
 import sys
 import sqlite3
 
@@ -44,11 +45,16 @@ def main_menu():
     # screen.fill((30, 30, 30))
     screen.blit(bg_image, bg_image.get_rect())
 
-    MenuText = get_font(85).render("SPACE BUBBLES!!", True, PURPLE)
-    MenuRect = MenuText.get_rect(center=(300, 100))
+    MenuTextL1 = get_font(85, 'title').render("Space", True, PURPLE)
+    MenuRectL1 = MenuTextL1.get_rect(center=(300, 90))
+    MenuTextL2 = get_font(85, 'title').render("Bubbles", True, PURPLE)
+    MenuRectL2 = MenuTextL2.get_rect(center=(300, 70 + MenuTextL1.get_height()))
+
+    quoteText = get_font(20, 'quote').render(f'"{get_quote()}."', True, YELLOW)
+    quoteRect = quoteText.get_rect(center=(screen_width / 2, screen_height - 90))
 
     PlayButton = Button(image=None,
-                        pos=(300, 275),
+                        pos=(300, 250),
                         text_input="PLAY",
                         font=get_font(50),
                         base_color=WHITE,
@@ -56,14 +62,14 @@ def main_menu():
                         )
 
     LeaderBoardButton = Button(image=None,
-                               pos=(300, 375),
+                               pos=(300, 325),
                                text_input="LEADERBOARD",
                                font=get_font(50),
                                base_color=WHITE,
                                hovering_color=GREEN)
 
     QuitButton = Button(image=None,
-                        pos=(300, 475),
+                        pos=(300, 400),
                         text_input="QUIT (while you're ahead)",
                         font=get_font(50),
                         base_color=WHITE,
@@ -75,7 +81,9 @@ def main_menu():
 
         MenuMouse = pygame.mouse.get_pos()
 
-        screen.blit(MenuText, MenuRect)
+        screen.blit(MenuTextL1, MenuRectL1)
+        screen.blit(MenuTextL2, MenuRectL2)
+        screen.blit(quoteText, quoteRect)
 
         for button in [PlayButton, LeaderBoardButton, QuitButton]:
             button.changeColor(MenuMouse)
@@ -309,14 +317,35 @@ def input():
 
     return name
 
+
 def text1(name, x, y):
     font = pygame.font.SysFont(None, 25)
     text = font.render("{}".format(name), True, RED)
     return screen.blit(text, (x,y))
 
-def get_font(size):     # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("fonts/CaveatBrush-Regular.ttf", size)
 
+def get_font(size, font="default"):     # Returns Press-Start-2P in the desired size
+    if font == "title":
+        return pygame.font.Font("fonts/title.ttf", size)
+    if font == "quote":
+        return pygame.font.Font("fonts/quote.ttf", size)
+    else:
+        return pygame.font.Font("fonts/default.ttf", size)
+
+
+def get_quote():
+    """Uses an API to get a random techy soundy quote"""
+    error = "You should really get to fixing your flux resistance"
+    try:
+        r = requests.get("https://techy-api.vercel.app/api/json")
+        while len(r.json()["message"]) > 55:
+            r = requests.get("https://techy-api.vercel.app/api/json")
+        if r.status_code == 200:
+            return r.json()["message"]
+        else:
+            return error
+    except Exception:
+        return error
 
 if __name__ == '__main__':
     # Run the main game loop when the program is executed

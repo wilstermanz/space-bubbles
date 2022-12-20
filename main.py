@@ -5,7 +5,6 @@ import requests
 import sys
 import sqlite3
 
-
 pygame.init()
 
 # Define Default Colors
@@ -127,39 +126,40 @@ def leaderboard():
     bg_image = pygame.image.load('images/background.png')
 
     leaderDbBuild()
-    conn = sqlite3.connect('leaderboard.db')
-    c = conn.cursor()
-    c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
-    leaders = c.fetchmany(10)
+    with sqlite3.connect('leaderboard.db') as conn:
+        c = conn.cursor()
+        c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
+        leaders = c.fetchmany(10)
 
-    table = Table()
-    table.set_column_num(5)
-    table.set_row_num(11, 30)
-    table.resize(517, 330)
-    table.set_text(0, 0, f"Initials")
-    table.set_text(0, 1, f"Score")
-    table.set_text(0, 2, f"# Popped")
-    table.set_text(0, 3, f"# Fired")
-    table.set_text(0, 4, f"Misses")
+        table = Table()
+        table.set_column_num(5)
+        table.set_row_num(11, 30)
+        table.resize(517, 330)
+        table.set_text(0, 0, f"Initials")
+        table.set_text(0, 1, f"Score")
+        table.set_text(0, 2, f"# Popped")
+        table.set_text(0, 3, f"# Fired")
+        table.set_text(0, 4, f"Misses")
 
-    if len(leaders) > 0:
-        for i in range(1, len(leaders) + 1):
-            for j in range(5):
-                table.set_text(i, j, f"{leaders[i - 1][j]}")
+        if len(leaders) > 0:
+            for i in range(1, len(leaders) + 1):
+                for j in range(5):
+                    table.set_text(i, j, f"{leaders[i - 1][j]}")
 
-    screen.blit(bg_image, bg_image.get_rect())
+        screen.blit(bg_image, bg_image.get_rect())
 
-    LeaderboardText = get_font(100).render("Leaderboard", True, PURPLE)
-    LeaderboardRect = LeaderboardText.get_rect(center=(screen_width // 2, 100))
-    BackButton = Button(image=None,
-                        pos=(300, 525),
-                        text_input="Back",
-                        font=get_font(50),
-                        base_color=WHITE,
-                        hovering_color=GREEN)
+        LeaderboardText = get_font(100).render("Leaderboard", True, PURPLE)
+        LeaderboardRect = LeaderboardText.get_rect(
+            center=(screen_width // 2, 100))
+        BackButton = Button(image=None,
+                            pos=(300, 525),
+                            text_input="Back",
+                            font=get_font(50),
+                            base_color=WHITE,
+                            hovering_color=GREEN)
 
-    screen.blit(LeaderboardText, LeaderboardRect)
-    conn.close()
+        screen.blit(LeaderboardText, LeaderboardRect)
+        c.close()
 
     pygame.display.set_caption("Leaderboard")
 
@@ -188,30 +188,34 @@ def leaderboard():
 def leaderDbBuild(game=None, name=""):
     """Makes storage file/connection and creates table if not exists"""
     # creates sqlite connection and creates the db
-    conn = sqlite3.connect('leaderboard.db')
-    c = conn.cursor()
-    # creates the table in the db
-    c.execute("""CREATE TABLE IF NOT EXISTS performanceData (
-                Initials text,
-                Score integer,
-                BubblesPopped integer,
-                ShotsFired integer,
-                ShotsMissed integer
-                )""")
+    with sqlite3.connect('leaderboard.db') as conn:
+        c = conn.cursor()
+        # creates the table in the db
+        c.execute("""CREATE TABLE IF NOT EXISTS performanceData (
+                    Initials text,
+                    Score integer,
+                    BubblesPopped integer,
+                    ShotsFired integer,
+                    ShotsMissed integer
+                    )""")
+        c.close()
 
-    # inserts a row into the table if it was an instance of a game play
-    if game is not None:
-        c.execute("INSERT INTO performanceData VALUES(:name,"
-                  ":score, :bubblespopped, :shotsfired, :shotsmissed)",
-                  {'name': name,
-                   'score': game.score,
-                   'bubblespopped': game.hits,
-                   'shotsfired': game.shots_fired,
-                   'shotsmissed': game.misses})
+        # inserts a row into the table if it was an instance of a game play
+        if game is not None:
+            c = conn.cursor()
+            c.execute("INSERT INTO performanceData VALUES(:name,"
+                      ":score, :bubblespopped, :shotsfired, :shotsmissed)",
+                      {'name': name,
+                       'score': game.score,
+                       'bubblespopped': game.hits,
+                       'shotsfired': game.shots_fired,
+                       'shotsmissed': game.misses})
+            c.close()
 
-    c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
-    conn.commit()
-    conn.close()
+        c = conn.cursor()
+        c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
+        c.close()
+        conn.commit()
 
 
 def input(score, hits, level, time):

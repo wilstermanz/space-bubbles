@@ -13,16 +13,16 @@ This is Space Bubbles, a mashup of Space Invaders and Bubble Shooter. It's purpo
 - [X] The speed increases over time to increase difficulty
 
 **Stretch goals**
-- [ ] Graphics and animation upgrades
+- [x] Graphics and animation upgrades
 - [X] Colorful bubbles!
 - [X] Colorful bullets!
 - [X] Bullets can only pop bubble of like colors
 - [X] Sounds!
-- [ ] Levels with increasing difficulty
+- [X] Levels with increasing difficulty
 - [X] Bubble speed increases if the player makes a mistake
-- [ ] Local leaderboard using file storage
+- [X] Local leaderboard using SQLite
 - [ ] A high score celebration!
-- [ ] An API call to do ...something
+- [X] An API call to do ...something
 
 **Stretch stretch goals**
 - [ ] Global leaderboard

@@ -130,10 +130,10 @@ def leaderboard():
     table.set_text(0, 3, f"# Fired")
     table.set_text(0, 4, f"Misses")
     
-        
-    for i in range(1, 11):
-        for j in range(5):
-            table.set_text(i, j, f"{leaders[i - 1][j]}")
+    if len(leaders) > 0:
+        for i in range(1, len(leaders) + 1):
+            for j in range(5):
+                table.set_text(i, j, f"{leaders[i - 1][j]}")
 
 
     # screen.fill((30, 30, 30))

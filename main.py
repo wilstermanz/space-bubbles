@@ -50,9 +50,7 @@ def main_menu():
     MenuRectL2 = MenuTextL2.get_rect(
         center=(300, MenuRectL1.bottom + 20))
 
-    quoteText = get_font(18, 'quote').render(f'"{get_quote()}."', True, YELLOW)
-    quoteRect = quoteText.get_rect(
-        center=(screen_width / 2, screen_height - 90))
+    quote = get_quote()
 
     PlayButton = Button(image=None,
                         pos=(300, 250),
@@ -82,6 +80,10 @@ def main_menu():
 
         MenuMouse = pygame.mouse.get_pos()
 
+        quoteText = get_font(18, 'quote').render(f'"{quote}."', True, YELLOW)
+        quoteRect = quoteText.get_rect(
+            center=(screen_width / 2, screen_height - 90))
+
         screen.blit(MenuTextL1, MenuRectL1)
         screen.blit(MenuTextL2, MenuRectL2)
         screen.blit(quoteText, quoteRect)
@@ -105,9 +107,11 @@ def main_menu():
                                  game.current_time)
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
+                    quote = get_quote()
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False
                     leaderboard()
+                    quote = get_quote()
                 if QuitButton.checkForInput(MenuMouse):
                     pygame.quit()
                     sys.exit()
@@ -337,7 +341,7 @@ def input(score, hits, level, time):
                     name += chr(event.key)
                 if event.key == pygame.K_0:
                     name += chr(event.key)
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and len(name) != 0:
                     name += chr(event.key)
                 if event.key == pygame.K_BACKSPACE:
                     if len(name) > 0:

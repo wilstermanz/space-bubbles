@@ -156,8 +156,6 @@ class Player(pygame.sprite.Sprite):
         # Pew
         self.laser_sound.play()
         self.update_player_color()
-        print('Pew but with ', end="")
-        print("\x1B[3m" + text + "\x1B[0m")
 
     def update(self):
         """

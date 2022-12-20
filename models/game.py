@@ -121,7 +121,6 @@ class Game:
                             self.hits_this_lvl += 1
                             self.score += 1000
                             bubble.kill()
-                            print(self.score)
                         else:
                             self.splat_sound.play()
                             self.misses += 1
@@ -130,14 +129,12 @@ class Game:
                             else:
                                 self.score = 0
                             self.bubbles_speed += 0.3
-                            print(self.score)
 
         # bubble player check
         for player in self.player:
             player_hit = pygame.sprite.spritecollide(
                 player, self.bubbles, True)
             if player_hit:
-                print("fuck you suck")
                 self.game_over = True
 
     def time_points(self):
@@ -230,9 +227,8 @@ class Game:
             clock.tick(60)
 
             # Start new level when all bubbles popped
-            if self.hits % 40 == 0 and self.hits > 0:
+            if self.hits_this_lvl % 40 == 0 and self.hits_this_lvl > 0:
                 self.hits_this_lvl = 0
                 self.level += 1
-                print("Cleared Screen")
                 self.bubbles_setup(5, 8, 60, 60, 5, 30)
                 self.bubbles.draw(screen)

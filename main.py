@@ -50,7 +50,7 @@ def main_menu():
     MenuTextL2 = get_font(85, 'title').render("Bubbles", True, PURPLE)
     MenuRectL2 = MenuTextL2.get_rect(center=(300, 70 + MenuTextL1.get_height()))
 
-    quoteText = get_font(20, 'quote').render(f'"{get_quote()}."', True, YELLOW)
+    quoteText = get_font(18, 'quote').render(f'"{get_quote()}."', True, YELLOW)
     quoteRect = quoteText.get_rect(center=(screen_width / 2, screen_height - 90))
 
     PlayButton = Button(image=None,
@@ -99,7 +99,6 @@ def main_menu():
                     game = Game()
                     game.run()
                     name = input()
-                    print("Name: {}, Score: {}, Bubbles Popped: {}, Shots Fired: {}, Total Misses: {}".format(name, game.score, (game.hits + (40 * game.level - 1)), game.shots_fired, game.misses))
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
                 if LeaderBoardButton.checkForInput(MenuMouse):
@@ -202,7 +201,6 @@ def leaderDbBuild(game=None, name=""):
     if game is not None:
         c.execute("INSERT INTO performanceData VALUES(:name, :score, :bubblespopped, :shotsfired, :shotsmissed)", {'name': name, 'score': game.score, 'bubblespopped': game.hits, 'shotsfired': game.shots_fired, 'shotsmissed': game.misses})
 
-    # prints the db for funsies right now
     c.execute("SELECT * FROM performanceData ORDER BY Score DESC")
     conn.commit()
     conn.close()

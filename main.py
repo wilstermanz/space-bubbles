@@ -107,6 +107,7 @@ def main_menu():
                                  game.current_time)
                     leaderDbBuild(game, name)
                     screen.blit(bg_image, bg_image.get_rect())
+                    pygame.mouse.set_visible(True)
                     quote = get_quote()
                 if LeaderBoardButton.checkForInput(MenuMouse):
                     running = False

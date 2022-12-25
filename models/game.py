@@ -188,6 +188,7 @@ class Game:
 
             # screen.fill(BLACK)
             screen.blit(bg_image, bg_image.get_rect())
+            pygame.mouse.set_visible(False)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
